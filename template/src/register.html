@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custodian - Create new account</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+</head>
+
+<body>
+    <!-- Header + Theme Switcher : Start -->
+    <div class="top-0 fixed flex justify-between items-center px-6 py-4 w-full">
+        <div>
+            <h1 class="font-extrabold text-4xl text-primary">Custodian</h1>
+            <p class="-mt-1.5 ml-6 font-semibold text-lg text-secondary">HTML Template</p>
+        </div>
+
+        <select class="max-w-xs select-ghost select" data-choose-theme>
+            <option disabled selected>Pick your theme</option>
+            <option value="light">Default</option>
+            <option value="cupcake">Cupcake</option>
+            <option value="bumblebee">Bumblebee</option>
+            <option value="emerald">Emerald</option>
+            <option value="corporate">Corporate</option>
+            <option value="synthwave">Synthwave</option>
+            <option value="retro">Retro</option>
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="valentine">Valentine</option>
+            <option value="halloween">Halloween</option>
+            <option value="garden">Garden</option>
+            <option value="forest">Forest</option>
+            <option value="aqua">Aqua</option>
+            <option value="lofi">Lofi</option>
+            <option value="pastel">Pastel</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="wireframe">Wireframe</option>
+            <option value="black">Black</option>
+            <option value="luxury">Luxury</option>
+            <option value="dracula">Dracula</option>
+            <option value="cmyk">Cmyk</option>
+            <option value="autumn">Autumn</option>
+            <option value="business">Business</option>
+            <option value="acid">Acid</option>
+            <option value="lemonade">Lemonade</option>
+            <option value="night">Night</option>
+            <option value="coffee">Coffee</option>
+            <option value="winter">Winter</option>
+            <option value="dim">Dim</option>
+            <option value="nord">Nord</option>
+            <option value="sunset">Sunset</option>
+        </select>
+    </div>
+    <!-- Header + Theme Switcher : End -->
+
+    <!-- Main Content : Start -->
+    <div class="bg-base-200 h-screen hero">
+        <div class="flex-col hero-content">
+            <div class="flex bg-base-100 shadow-2xl w-96 card">
+                <form class="card-body">
+                    <h3 class="font-semibold text-lg">Sign up for Custodian</h3>
+
+                    <div class="form-control mt-4">
+                        <label class="label">
+                            <span class="label-text">Your email</span>
+                        </label>
+                        <input type="email" placeholder="email@company.com" class="input-bordered input" autofocus
+                            required />
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Your password</span>
+                        </label>
+                        <input type="password" placeholder="********" class="input-bordered input" required />
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Confirm password</span>
+                        </label>
+                        <input type="password" placeholder="********" class="input-bordered input" required />
+                    </div>
+
+                    <div class="form-control mt-6">
+                        <a href="/login.html" class="btn btn-primary">Create account</a>
+                    </div>
+
+                    <p class="text-base-content text-sm">
+                        Already have an account?
+                        <a href="/login.html" class="link link-hover link-primary">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content : End -->
+</body>
+
+</html>
