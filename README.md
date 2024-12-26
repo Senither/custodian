@@ -16,7 +16,6 @@ All the different versions of Custodian all be built with the same basic functio
 - Allow users to create and manage their tasks (edit and delete)
 - Filter tasks by the following:
     - completion status
-    - due date
     - priority
     - category
     - search query
