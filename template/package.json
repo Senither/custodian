@@ -2,13 +2,14 @@
   "scripts": {
     "build:prod": "npx tailwindcss -i ./style.css -o ./src/style.css --minify",
     "build:dev": "npx tailwindcss -i ./style.css -o ./src/style.css --watch",
-    "serve": "concurrently --kill-others -c \"#93c5fd,#c4b5fd\" \"npm run build:dev\" \"http-server ./src -o\""
+    "serve": "concurrently -c \"#93c5fd,#c4b5fd,#93ff96\" \"npm run build:dev\" \"http-server ./src -o\" \"live-reload ./src --delay=150\""
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "concurrently": "^9.1.0",
     "daisyui": "^4.12.22",
     "http-server": "^14.1.1",
+    "live-reload": "^1.1.1",
     "tailwindcss": "^3.4.17"
   }
 }

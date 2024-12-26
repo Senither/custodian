@@ -13,7 +13,7 @@ npm install
 npm run serve
 ```
 
-This will install the necessary dependencies and start a development server. You can then access the template at `http://localhost:8080`.
+This will install the necessary dependencies and start a development server. You can then access the template at `http://localhost:8080`, it will also start a live reload server on port `:9090` so you can see your changes in real-time.
 
 Alternatively, you can just build the CSS by running `npm run build:dev` or `npm run build:prod` for development and production builds respectively.
 
