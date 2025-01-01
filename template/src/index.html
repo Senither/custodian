@@ -10,10 +10,10 @@
     <script src="http://localhost:9090"></script>
 </head>
 
-<body class="flex flex-col justify-between h-screen">
+<body class="flex flex-col justify-between bg-base-200 min-h-screen">
     <!-- Navbar : Start -->
-    <header class="flex justify-between items-center bg-base-100 px-4 py-2">
-        <div class="bg-base-100 mx-auto max-w-5xl navbar">
+    <header class="flex justify-between items-center px-4 py-2">
+        <div class="mx-auto max-w-5xl navbar">
             <div class="navbar-start">
                 <a href="/">
                     <h1 class="font-extrabold text-4xl text-primary">Custodian</h1>
@@ -58,7 +58,7 @@
                 </select>
 
                 <div class="dropdown dropdown-end">
-                    <div tabindex="0" role="button" class="m-1 btn">
+                    <div tabindex="0" role="button" class="bg-base-100 m-1 btn">
                         <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,7 +83,7 @@
             <button onclick="createTaskModal.showModal()" class="btn btn-primary">Add Task</button>
 
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="m-1 btn">
+                <div tabindex="0" role="button" class="bg-base-100 m-1 btn">
                     <svg class="w-5 h-5 text-base-content" data-slot="icon" fill="none" stroke-width="1.5"
                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -91,7 +91,7 @@
                         </path>
                     </svg>
                 </div>
-                <div tabindex="0" class="z-[1] bg-base-200 shadow p-2 rounded-box dropdown-content menu">
+                <div tabindex="0" class="z-[1] bg-base-100 shadow p-2 rounded-box dropdown-content menu">
                     <!-- Filter Dropdown : Start -->
                     <div class="flex flex-col gap-4 px-3 py-2 min-w-52">
                         <label class="form-control w-full max-w-xs">
@@ -157,9 +157,9 @@
         </div>
 
         <!-- Task Card : Start -->
-        <div class="flex flex-col gap-4 bg-base-200 shadow-lg px-6 py-4 rounded-md">
+        <div class="flex flex-col gap-4 bg-base-100 shadow-lg px-6 py-4 rounded-md">
             <!-- Task Card : Buy groceries : Start -->
-            <div class="bg-base-100 shadow px-4 py-3 rounded-md">
+            <div class="border-primary/10 bg-primary/5 shadow px-4 py-3 border rounded-md">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
                         <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" />
@@ -179,7 +179,8 @@
                     </div>
 
                     <div class="flex gap-2">
-                        <button onclick="deleteTaskModal.showModal()" class="bg-base-200 btn btn-square">
+                        <button onclick="deleteTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-error">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -189,7 +190,8 @@
                             </svg>
                         </button>
 
-                        <button onclick="editTaskModal.showModal()" class="btn btn-square">
+                        <button onclick="editTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-primary">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -204,7 +206,7 @@
             <!-- Task Card : Buy groceries : End -->
 
             <!-- Task Card : Build Custodian using new stacks : Start -->
-            <div class="bg-base-100 shadow px-4 py-3 rounded-md">
+            <div class="border-primary/10 bg-primary/5 shadow px-4 py-3 border rounded-md">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
                         <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" />
@@ -224,7 +226,8 @@
                     </div>
 
                     <div class="flex gap-2">
-                        <button onclick="deleteTaskModal.showModal()" class="bg-base-200 btn btn-square">
+                        <button onclick="deleteTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-error">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -234,7 +237,8 @@
                             </svg>
                         </button>
 
-                        <button onclick="editTaskModal.showModal()" class="btn btn-square">
+                        <button onclick="editTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-primary">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -249,7 +253,8 @@
             <!-- Task Card : Build Custodian using new stacks : End -->
 
             <!-- Task Card : Finish client project : Start -->
-            <div class="bg-base-100 opacity-45 hover:opacity-80 shadow px-4 py-3 rounded-md transition-opacity">
+            <div
+                class="border-primary/10 bg-primary/5 opacity-45 hover:opacity-80 shadow px-4 py-3 border rounded-md transition-opacity">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
                         <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary"
@@ -270,7 +275,8 @@
                     </div>
 
                     <div class="flex gap-2">
-                        <button onclick="deleteTaskModal.showModal()" class="bg-base-200 btn btn-square">
+                        <button onclick="deleteTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-error">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -280,7 +286,8 @@
                             </svg>
                         </button>
 
-                        <button onclick="editTaskModal.showModal()" class="btn btn-square">
+                        <button onclick="editTaskModal.showModal()"
+                            class="bg-base-100 btn btn-square hover:btn-primary">
                             <svg class="w-5 h-5 text-content" data-slot="icon" fill="none" stroke-width="1.5"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                 aria-hidden="true">
@@ -299,7 +306,7 @@
     <!-- Main Content : End -->
 
     <!-- Footer : Start -->
-    <footer class="items-center bg-base-200 mt-12 p-4 border-t border-base-300 text-base-content footer">
+    <footer class="items-center bg-base-100 mt-12 p-4 border-t border-base-300 text-base-content footer">
         <div class="flex justify-between items-center mx-auto max-w-3xl container">
             <aside class="items-center grid-flow-col">
                 <p>Custodian - HTML Template - Checkout the source code on GitHub</p>
