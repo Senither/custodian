@@ -325,9 +325,9 @@
     <!-- Footer : End -->
 
     <!-- Create Task Modal : Start -->
-    <dialog id="createTaskModal" class="modal">
+    <dialog id="createTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
         <div class="p-0 modal-box">
-            <div class="flex items-center gap-4 p-4">
+            <div class="flex items-center gap-4 p-6">
                 <svg class="w-8 h-8 text-primary" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -336,7 +336,7 @@
                 </svg>
                 <h3 class="font-bold text-lg">Creating new Task</h3>
             </div>
-            <div class="flex flex-col gap-4 px-4">
+            <div class="flex flex-col gap-4 px-6">
 
                 <label class="form-control w-full">
                     <div class="label">
@@ -375,9 +375,9 @@
 
             </div>
             <form method="dialog" class="modal-backdrop">
-                <div class="gap-4 grid grid-cols-2 mt-4 p-4 border-t border-base-300">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
                     <button class="text-primary-content btn btn-primary">Create Task</button>
-                    <button class="btn">Close</button>
+                    <button class="bg-base-200 border border-base-300 btn">Close</button>
                 </div>
             </form>
         </div>
@@ -385,9 +385,9 @@
     <!-- Create Task Modal : End -->
 
     <!-- Edit Task Modal : Start -->
-    <dialog id="editTaskModal" class="modal">
+    <dialog id="editTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
         <div class="p-0 modal-box">
-            <div class="flex items-center gap-4 p-4">
+            <div class="flex items-center gap-4 p-6">
                 <svg class="w-8 h-8 text-primary" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -396,7 +396,7 @@
                 </svg>
                 <h3 class="font-bold text-lg">Editing Task</h3>
             </div>
-            <div class="flex flex-col gap-4 px-4">
+            <div class="flex flex-col gap-4 px-6">
 
                 <label class="form-control w-full">
                     <div class="label">
@@ -436,9 +436,9 @@
 
             </div>
             <form method="dialog" class="modal-backdrop">
-                <div class="gap-4 grid grid-cols-2 mt-4 p-4 border-t border-base-300">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
                     <button class="text-primary-content btn btn-primary">Save Task</button>
-                    <button class="btn">Close</button>
+                    <button class="bg-base-200 border border-base-300 btn">Close</button>
                 </div>
             </form>
         </div>
@@ -446,9 +446,9 @@
     <!-- Edit Task Modal : End -->
 
     <!-- Delete Task Modal : Start -->
-    <dialog id="deleteTaskModal" class="modal">
+    <dialog id="deleteTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
         <div class="p-0 modal-box">
-            <div class="flex items-center gap-4 p-4">
+            <div class="flex items-center gap-4 p-6">
                 <svg class="w-8 h-8 text-warning" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -457,16 +457,16 @@
                 </svg>
                 <h3 class="font-bold text-lg">Are you sure you want to continue?</h3>
             </div>
-            <div class="px-4 prose">
+            <div class="px-6 prose">
                 <p>
                     You're about the delete the "Buy groceries" task, this is a permanent action and cannot be reversed.
                 </p>
                 <p>Are you sure you want to continue?</p>
             </div>
             <form method="dialog" class="modal-backdrop">
-                <div class="gap-4 grid grid-cols-2 mt-4 p-4 border-t border-base-300">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
                     <button class="btn btn-warning">Delete Task</button>
-                    <button class="btn">Close</button>
+                    <button class="bg-base-200 border border-base-300 btn">Close</button>
                 </div>
             </form>
         </div>
