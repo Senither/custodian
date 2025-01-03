@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Descriptor
+    |--------------------------------------------------------------------------
+    |
+    | This value is the descriptor of your application, which will be used when the
+    | framework needs to place the application's descriptor in a notification or
+    | other UI elements where an application descriptor needs to be displayed.
+    |
+    */
+
+    'descriptor' => env('APP_DESCRIPTOR', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 
-new class extends Component
-{
+new class extends Component {
     public string $name = '';
     public string $email = '';
 
@@ -62,54 +61,42 @@ new class extends Component
     }
 }; ?>
 
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
+<section class="gap-4 grid grid-cols-1 md:grid-cols-5">
+    <header class="md:col-span-2 px-6 sm:px-0 prose">
+        <h3 class="font-semibold text-xl">Account details</h3>
+        <p>Update your account's profile information and email address.</p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+    <div class="flex flex-col flex-1 md:col-span-3 bg-base-100 border border-base-300 sm:rounded-md">
+        <form wire:submit="updateProfileInformation">
+            <div class="flex flex-col gap-4 px-4 py-3 w-full">
+                <label class="form-control px-4 w-full">
+                    <div class="label">
+                        <span class="label-text">Name</span>
+                    </div>
+                    <input wire:model="name" type="text" placeholder="Your name" class="input-bordered w-full max-w-xs input" />
+                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                </label>
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                <label class="form-control px-4 w-full">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input wire:model="email" type="email" placeholder="name@company.com"
+                           class="input-bordered w-full max-w-xs input" />
+                    <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                </label>
+            </div>
 
-            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
+            <div class="my-0 py-0 divider"></div>
 
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
+            <div class="flex justify-end items-center px-4 py-3">
+                <x-action-message class="mr-3" on="profile-updated">
+                    {{ __('Saved.') }}
+                </x-action-message>
 
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
-        </div>
-
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            <x-action-message class="me-3" on="profile-updated">
-                {{ __('Saved.') }}
-            </x-action-message>
-        </div>
-    </form>
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
 </section>
