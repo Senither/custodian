@@ -2,7 +2,7 @@
 
 This is the template for the Custodian project. This template is meant to provide a basic structure for the app and to help ensure that the different versions of Custodian are as similar as possible.
 
-The template is built using [TailwindCSS](https://tailwindcss.com/) with [DaisyUI](https://daisyui.com/), if you are not familiar with these tools, you can find more information on their respective websites.
+The template is built using [TailwindCSS](https://tailwindcss.com/) with [DaisyUI](https://daisyui.com/) and icons from [Heroicons](https://heroicons.dev/), if you are not familiar with these tools, you can find more information on their respective websites.
 
 ## Getting Started
 
