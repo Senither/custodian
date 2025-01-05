@@ -2,24 +2,11 @@
 
 namespace App\Livewire\Tasks;
 
-use App\Livewire\Forms\TaskForm;
-use App\Models\Category;
-use App\Models\Priority;
+use App\Livewire\Contracts\TaskModalComponent;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 
-class CreateTaskModal extends Component
+class CreateTaskModal extends TaskModalComponent
 {
-    /**
-     * The form for update modal.
-     */
-    public TaskForm $form;
-
-    /**
-     * Determines if the modal is shown to the end-user or not.
-     */
-    public bool $showModal = false;
-
     /**
      * Validates the form and saves the task.
      */
@@ -28,10 +15,8 @@ class CreateTaskModal extends Component
         $this->form->store();
 
         $this
-            ->dispatch('task-created')
+            ->closeModalWithEvent('task-created')
             ->to(RenderDashboardTasks::class);
-
-        $this->showModal = false;
     }
 
     /**
@@ -39,9 +24,9 @@ class CreateTaskModal extends Component
      */
     public function render(): View
     {
-        return view('livewire.tasks.create-task-modal', [
-            'categories' => Category::orderBy('name')->get(),
-            'priorities' => Priority::get(),
-        ]);
+        return view(
+            view: 'livewire.tasks.create-task-modal',
+            data: $this->getTaskViewData(),
+        );
     }
 }
