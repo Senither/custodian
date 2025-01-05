@@ -45,6 +45,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </label>
             <input wire:model="name" type="text" placeholder="Eg. John Doe"
                    class="input-bordered input" autofocus required autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <div class="form-control mt-4">
@@ -53,6 +54,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </label>
             <input wire:model="email" type="email" placeholder="email@company.com"
                    class="input-bordered input" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <div class="form-control mt-4">
@@ -61,6 +63,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </label>
             <input wire:model="password" type="password" placeholder="********"
                    class="input-bordered input" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <div class="form-control mt-4">
