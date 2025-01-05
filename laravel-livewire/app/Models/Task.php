@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Concerns\BelongsToUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
+    use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
@@ -22,14 +25,6 @@ class Task extends Model
         'priority_id',
         'category_id',
     ];
-
-    /**
-     * Get the relationship for the user that owns the task.
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     /**
      * Get the relationship for the priority that is assigned to the task.
