@@ -22,6 +22,8 @@ class UserSeeder extends Seeder
 
         Task::factory()
             ->recycle($defaultUser)
+            ->recycle($defaultUser->priorities)
+            ->recycle($defaultUser->categories)
             ->count(8)
             ->create();
     }

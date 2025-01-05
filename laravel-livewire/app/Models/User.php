@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,6 +35,17 @@ class User extends Authenticatable
     ];
 
     /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => UserCreated::class,
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -52,5 +64,21 @@ class User extends Authenticatable
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Get the priorities that belong to the user.
+     */
+    public function priorities(): HasMany
+    {
+        return $this->hasMany(Priority::class);
+    }
+
+    /**
+     * Get the categories that belong to the user.
+     */
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
     }
 }
