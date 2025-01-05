@@ -14,13 +14,13 @@ class TaskForm extends Form
     public ?Task $task;
 
     #[Validate('required|string|max:255')]
-    public string $message;
+    public ?string $message = null;
 
     #[Validate('required|integer|exists:priorities,id')]
-    public int $priority;
+    public ?int $priority = null;
 
     #[Validate('required|integer|exists:categories,id')]
-    public int $category;
+    public ?int $category = null;
 
     /**
      * Sets the task for the form.
@@ -32,6 +32,23 @@ class TaskForm extends Form
         $this->message = $task->message;
         $this->priority = $task->priority_id;
         $this->category = $task->category_id;
+    }
+
+    /**
+     * Validates the form and creates a new task.
+     */
+    public function store(): void
+    {
+        $this->validate();
+
+        Task::create([
+            'status' => false,
+            'message' => $this->message,
+            'category_id' => $this->category,
+            'priority_id' => $this->priority,
+        ]);
+
+        $this->reset();
     }
 
     /**

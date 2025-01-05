@@ -15,6 +15,7 @@ class RenderDashboardTasks extends Component
      * Renders the component.
      */
     #[On('task-updated')]
+    #[On('task-created')]
     public function render(): View
     {
         return view('livewire.tasks.render-dashboard-tasks', [

@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
     <div class="flex justify-between px-6 md:px-0">
-        <button onclick="createTaskModal.showModal()" class="btn btn-primary">Add Task</button>
+        <livewire:tasks.create-task-modal />
 
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="bg-base-100 m-1 btn">
@@ -83,66 +83,6 @@
     </div>
 
     {{-- <x-slot name="modals">
-        <!-- Create Task Modal : Start -->
-        <dialog id="createTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
-            <div class="p-0 modal-box">
-                <div class="flex items-center gap-4 p-6">
-                    <svg class="w-8 h-8 text-primary" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
-                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18">
-                        </path>
-                    </svg>
-                    <h3 class="font-bold text-lg">Creating new Task</h3>
-                </div>
-                <div class="flex flex-col gap-4 px-6">
-
-                    <label class="form-control w-full">
-                        <div class="label">
-                            <span class="label-text">What is the task?</span>
-                        </div>
-                        <input type="text" placeholder="Eg. Do the thing..." class="input-bordered w-full input" />
-                    </label>
-
-                    <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
-                        <label class="form-control">
-                            <div class="label">
-                                <span class="label-text">Category</span>
-                            </div>
-                            <select class="select-bordered select">
-                                <option disabled selected>Pick one</option>
-                                <option>House Stuff</option>
-                                <option>Work</option>
-                                <option>Learning</option>
-                                <option>Meeting</option>
-                            </select>
-                        </label>
-
-                        <label class="form-control">
-                            <div class="label">
-                                <span class="label-text">Priority</span>
-                            </div>
-                            <select class="select-bordered select">
-                                <option disabled selected>Pick one</option>
-                                <option>Low</option>
-                                <option>Medium</option>
-                                <option>High</option>
-                                <option>Highest</option>
-                            </select>
-                        </label>
-                    </div>
-
-                </div>
-                <form method="dialog" class="modal-backdrop">
-                    <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
-                        <button class="text-primary-content btn btn-primary">Create Task</button>
-                        <button class="bg-base-200 border border-base-300 btn">Close</button>
-                    </div>
-                </form>
-            </div>
-        </dialog>
-        <!-- Create Task Modal : End -->
-
         <!-- Delete Task Modal : Start -->
         <dialog id="deleteTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
             <div class="p-0 modal-box">
