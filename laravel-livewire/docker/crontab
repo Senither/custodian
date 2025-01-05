@@ -1,0 +1,2 @@
+# Run Laravel scheduler
+* * * * * php /var/www/html/artisan schedule:run >> /var/log/scheduler.log 2>&1

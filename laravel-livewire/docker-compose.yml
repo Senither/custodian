@@ -1,0 +1,16 @@
+version: '3.7'
+
+volumes:
+    laravel:
+
+services:
+  laravel:
+    image: senither/custodian-laravel-livewire:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: custodian-laravel-livewire
+    ports:
+      - 8080:80
+    volumes:
+      - laravel:/var/www/html/storage
