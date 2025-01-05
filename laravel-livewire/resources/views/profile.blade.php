@@ -8,7 +8,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18">
                 </path>
             </svg>
-            Return to tasks</a>
+            Return to tasks
+        </a>
     </div>
 
     <div class="flex flex-col gap-8 sm:px-6 py-4 rounded-md">

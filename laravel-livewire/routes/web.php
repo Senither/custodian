@@ -1,15 +1,16 @@
 <?php
 
+use App\Livewire\Tasks\RenderDashboardTasks;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', RenderDashboardTasks::class)->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+    Route::get('profile', function () {
+        return view('profile');
+    })->name('profile');
+});
 
 require __DIR__.'/auth.php';

@@ -27,6 +27,18 @@ class Task extends Model
     ];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
+    }
+
+    /**
      * Get the relationship for the priority that is assigned to the task.
      */
     public function priority(): BelongsTo
