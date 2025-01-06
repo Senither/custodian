@@ -18,7 +18,7 @@
                         <div class="label">
                             <span class="label-text">Search for task</span>
                         </div>
-                        <input type="text" placeholder="Eg. My shopping list..."
+                        <input wire:model.live.debounce.250ms="filter.query" type="text" placeholder="Eg. My shopping list..."
                                class="input-bordered w-full max-w-xs input input-sm" />
                     </label>
 
@@ -30,13 +30,15 @@
                         <div class="flex justify-start gap-3">
                             <div class="form-control">
                                 <label class="flex justify-start gap-3 cursor-pointer label">
-                                    <input type="radio" name="status-radio" class="checked:radio-primary radio" />
+                                    <input wire:model.live="filter.status" type="radio" name="status-radio" value="finished"
+                                           class="checked:radio-primary radio" />
                                     <span class="label-text">Finished</span>
                                 </label>
                             </div>
                             <div class="form-control">
                                 <label class="flex justify-start gap-3 cursor-pointer label">
-                                    <input type="radio" name="status-radio" class="checked:radio-secondary radio" />
+                                    <input wire:model.live="filter.status" type="radio" name="status-radio" value="pending"
+                                           class="checked:radio-secondary radio" />
                                     <span class="label-text">Pending</span>
                                 </label>
                             </div>
@@ -47,12 +49,11 @@
                         <div class="label">
                             <span class="label-text">Filter by category</span>
                         </div>
-                        <select class="select-bordered select">
-                            <option disabled selected>Pick one</option>
-                            <option>House Stuff</option>
-                            <option>Work</option>
-                            <option>Learning</option>
-                            <option>Meeting</option>
+                        <select wire:model.live="filter.category" class="select-bordered select">
+                            <option :value="0">Pick one</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
                         </select>
                     </label>
 
@@ -60,16 +61,15 @@
                         <div class="label">
                             <span class="label-text">Filter by priority</span>
                         </div>
-                        <select class="select-bordered select">
-                            <option disabled selected>Pick one</option>
-                            <option>Low</option>
-                            <option>Medium</option>
-                            <option>High</option>
-                            <option>Highest</option>
+                        <select wire:model.live="filter.priority" class="select-bordered select">
+                            <option :value="0">Pick one</option>
+                            @foreach ($priorities as $priority)
+                                <option value="{{ $priority->id }}">{{ $priority->name }}</option>
+                            @endforeach
                         </select>
                     </label>
 
-                    <button class="mt-4 btn btn-secondary">Reset filters</button>
+                    <button wire:click="resetFilter" class="mt-4 btn btn-secondary">Reset filters</button>
                 </div>
                 <!-- Filter Dropdown : End -->
             </div>
