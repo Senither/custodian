@@ -6,22 +6,27 @@ use App\Livewire\Contracts\TaskModalComponent;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
 
-class UpdateTaskModal extends TaskModalComponent
+class DeleteTaskModal extends TaskModalComponent
 {
+    /**
+     * The task that should be deleted.
+     */
+    public Task $task;
+
     /**
      * Mounts the component.
      */
     public function mount(Task $task): void
     {
-        $this->form->setTask($task);
+        $this->task = $task;
     }
 
     /**
-     * Validates the form and saves the task.
+     * Handles deleting the task.
      */
-    public function saveTask(): void
+    public function delete(): void
     {
-        $this->form->update();
+        $this->task->delete();
 
         $this
             ->closeModalWithEvent('reload-tasks')
@@ -33,9 +38,6 @@ class UpdateTaskModal extends TaskModalComponent
      */
     public function render(): View
     {
-        return view(
-            view: 'livewire.tasks.update-task-modal',
-            data: $this->getTaskViewData(),
-        );
+        return view('livewire.tasks.delete-task-modal');
     }
 }

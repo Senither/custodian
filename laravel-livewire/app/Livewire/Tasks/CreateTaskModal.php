@@ -15,7 +15,7 @@ class CreateTaskModal extends TaskModalComponent
         $this->form->store();
 
         $this
-            ->closeModalWithEvent('task-created')
+            ->closeModalWithEvent('reload-tasks')
             ->to(RenderDashboardTasks::class);
     }
 

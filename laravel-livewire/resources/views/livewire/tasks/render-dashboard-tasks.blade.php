@@ -81,34 +81,4 @@
             <livewire:tasks.task-card :task="$task" :key="$task->id . '-' . $task->updated_at" />
         @endforeach
     </div>
-
-    {{-- <x-slot name="modals">
-        <!-- Delete Task Modal : Start -->
-        <dialog id="deleteTaskModal" class="backdrop-blur-sm backdrop-grayscale modal">
-            <div class="p-0 modal-box">
-                <div class="flex items-center gap-4 p-6">
-                    <svg class="w-8 h-8 text-warning" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
-                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z">
-                        </path>
-                    </svg>
-                    <h3 class="font-bold text-lg">Are you sure you want to continue?</h3>
-                </div>
-                <div class="px-6 prose">
-                    <p>
-                        You're about the delete the "Buy groceries" task, this is a permanent action and cannot be reversed.
-                    </p>
-                    <p>Are you sure you want to continue?</p>
-                </div>
-                <form method="dialog" class="modal-backdrop">
-                    <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
-                        <button class="btn btn-warning">Delete Task</button>
-                        <button class="bg-base-200 border border-base-300 btn">Close</button>
-                    </div>
-                </form>
-            </div>
-        </dialog>
-        <!-- Delete Task Modal : End -->
-    </x-slot> --}}
 </div>
