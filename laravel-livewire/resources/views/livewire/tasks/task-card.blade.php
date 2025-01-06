@@ -7,7 +7,7 @@
         <div class="flex items-center gap-4">
             <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" wire:model.live="completed" />
 
-            <div>
+            <div x-on:click="$wire.completed = !$wire.completed" class="cursor-pointer">
                 <h4 class="font-semibold text-lg">{{ $task->message }}</h4>
                 <div class="flex gap-3">
                     @if ($task->priority)
