@@ -35,7 +35,7 @@ class UpdateTaskModal extends TaskModalComponent
     {
         return view(
             view: 'livewire.tasks.update-task-modal',
-            data: $this->getTaskViewData(),
+            data: $this->getTaskRelationshipData(),
         );
     }
 }

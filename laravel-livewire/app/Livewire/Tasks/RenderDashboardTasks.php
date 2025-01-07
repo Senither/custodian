@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Tasks;
 
+use App\Concerns\InteractsWithTaskRelationshipCache;
 use App\Livewire\Forms\FilterForm;
 use App\Models\Category;
 use App\Models\Priority;
@@ -15,6 +16,8 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class RenderDashboardTasks extends Component
 {
+    use InteractsWithTaskRelationshipCache;
+
     /**
      * The filter form that helps determine how to filter the tasks.
      */
@@ -35,8 +38,7 @@ class RenderDashboardTasks extends Component
     public function render(): View
     {
         return view('livewire.tasks.render-dashboard-tasks', [
-            'categories' => Category::orderBy('name')->get(),
-            'priorities' => Priority::get(),
+            ...$this->getTaskRelationshipData(),
             'tasks' => $this->applyFiltersToQuery(
                 Task::with('priority', 'category'),
             )->orderBy('status')->latest()->get(),

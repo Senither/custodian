@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Contracts;
 
+use App\Concerns\InteractsWithTaskRelationshipCache;
 use App\Livewire\Forms\TaskForm;
-use App\Models\Category;
-use App\Models\Priority;
 use Livewire\Component;
 use Livewire\Features\SupportEvents\Event;
 
 abstract class TaskModalComponent extends Component
 {
+    use InteractsWithTaskRelationshipCache;
+
     /**
      * The form for update modal.
      */
@@ -36,23 +37,5 @@ abstract class TaskModalComponent extends Component
         $this->closeModal();
 
         return $this->dispatch($event);
-    }
-
-    /**
-     * Gets the view data for the task.
-     */
-    protected function getTaskViewData(): array
-    {
-        if (! $this->showModal) {
-            return [
-                'categories' => [],
-                'priorities' => [],
-            ];
-        }
-
-        return \once(fn () => [
-            'categories' => Category::orderBy('name')->get(),
-            'priorities' => Priority::get(),
-        ]);
     }
 }

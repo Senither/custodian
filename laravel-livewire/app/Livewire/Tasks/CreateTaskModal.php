@@ -26,7 +26,7 @@ class CreateTaskModal extends TaskModalComponent
     {
         return view(
             view: 'livewire.tasks.create-task-modal',
-            data: $this->getTaskViewData(),
+            data: $this->getTaskRelationshipData(),
         );
     }
 }
