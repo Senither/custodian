@@ -13,4 +13,15 @@ class FilterForm extends Form
     public ?int $category = null;
 
     public ?int $priority = null;
+
+    /**
+     * Checks if the form has any filters applied.
+     */
+    public function hasFilters(): bool
+    {
+        return $this->query !== null
+            || $this->status !== null
+            || $this->category !== null
+            || $this->priority !== null;
+    }
 }
