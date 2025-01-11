@@ -10,7 +10,7 @@
                    wire:model.live="completed"
                    @disabled(!auth()->user()->can('update', $task)) />
 
-            <div x-on:click="$wire.completed = !$wire.completed" class="cursor-pointer">
+            <div x-on:click="$wire.$toggle('completed')" class="cursor-pointer">
                 <h4 class="font-semibold text-lg">{{ $task->message }}</h4>
                 <div class="flex gap-3">
                     @if ($task->priority)
