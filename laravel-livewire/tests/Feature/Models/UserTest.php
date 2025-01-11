@@ -15,7 +15,7 @@ describe('events', function () {
 
         Event::assertDispatched(
             UserCreated::class,
-            fn($event) => $event->user->id === $user->id,
+            fn ($event) => $event->user->id === $user->id,
         );
     });
 });

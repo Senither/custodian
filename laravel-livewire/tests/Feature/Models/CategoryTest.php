@@ -18,7 +18,7 @@ describe('observers', function () {
 
         Cache::shouldReceive('forget')
             ->once()
-            ->with('task-relationships::' . $user->id);
+            ->with('task-relationships::'.$user->id);
 
         Category::factory()->recycle($user)->create();
     });
@@ -28,7 +28,7 @@ describe('observers', function () {
 
         Cache::shouldReceive('forget')
             ->once()
-            ->with('task-relationships::' . $category->user_id);
+            ->with('task-relationships::'.$category->user_id);
 
         $category->update(['name' => 'Updated Name']);
     });
@@ -38,7 +38,7 @@ describe('observers', function () {
 
         Cache::shouldReceive('forget')
             ->once()
-            ->with('task-relationships::' . $category->user_id);
+            ->with('task-relationships::'.$category->user_id);
 
         $category->delete();
     });

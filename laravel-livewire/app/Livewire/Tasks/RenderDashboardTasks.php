@@ -4,8 +4,6 @@ namespace App\Livewire\Tasks;
 
 use App\Concerns\InteractsWithTaskRelationshipCache;
 use App\Livewire\Forms\FilterForm;
-use App\Models\Category;
-use App\Models\Priority;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;

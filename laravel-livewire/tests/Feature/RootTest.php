@@ -1,6 +1,6 @@
 <?php
 
-it('returns a successful response', function () {
+it('redirects to dashboard', function () {
     $response = $this->get('/');
 
     $response
