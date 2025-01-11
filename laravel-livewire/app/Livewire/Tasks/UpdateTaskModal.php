@@ -21,6 +21,8 @@ class UpdateTaskModal extends TaskModalComponent
      */
     public function saveTask(): void
     {
+        $this->authorize('update', $this->form->task);
+
         $this->form->update();
 
         $this

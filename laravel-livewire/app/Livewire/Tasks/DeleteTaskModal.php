@@ -26,6 +26,8 @@ class DeleteTaskModal extends TaskModalComponent
      */
     public function delete(): void
     {
+        $this->authorize('delete', $this->task);
+
         $this->task->delete();
 
         $this

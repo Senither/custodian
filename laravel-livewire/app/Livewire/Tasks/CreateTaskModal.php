@@ -3,6 +3,7 @@
 namespace App\Livewire\Tasks;
 
 use App\Livewire\Contracts\TaskModalComponent;
+use App\Models\Task;
 use Illuminate\Contracts\View\View;
 
 class CreateTaskModal extends TaskModalComponent
@@ -12,6 +13,8 @@ class CreateTaskModal extends TaskModalComponent
      */
     public function createTask(): void
     {
+        $this->authorize('create', Task::class);
+
         $this->form->store();
 
         $this

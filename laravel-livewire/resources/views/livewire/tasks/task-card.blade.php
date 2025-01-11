@@ -5,7 +5,10 @@
      }">
     <div class="flex justify-between items-center">
         <div class="flex items-center gap-4">
-            <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" wire:model.live="completed" />
+            <input type="checkbox"
+                   class="checkbox checkbox-lg checked:checkbox-primary"
+                   wire:model.live="completed"
+                   @disabled(!auth()->user()->can('update', $task)) />
 
             <div x-on:click="$wire.completed = !$wire.completed" class="cursor-pointer">
                 <h4 class="font-semibold text-lg">{{ $task->message }}</h4>

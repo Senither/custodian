@@ -34,4 +34,16 @@ trait BelongsToUser
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Determines if the model belongs to the given user.
+     */
+    public function belongsToUser(int|User $user): bool
+    {
+        if ($user instanceof User) {
+            $user = $user->id;
+        }
+
+        return $this->user_id === $user;
+    }
 }

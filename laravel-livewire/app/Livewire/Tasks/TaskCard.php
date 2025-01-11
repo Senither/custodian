@@ -25,6 +25,8 @@ class TaskCard extends Component
      */
     public function mount(Task $task): void
     {
+        $this->authorize('view', $task);
+
         $this->task = $task;
 
         $this->completed = $task->status;
@@ -35,6 +37,8 @@ class TaskCard extends Component
      */
     public function updatedCompleted(): void
     {
+        $this->authorize('update', $this->task);
+
         $this->task->update([
             'status' => $this->completed,
         ]);
