@@ -12,12 +12,21 @@ use Livewire\Form;
 
 class LoginForm extends Form
 {
+    /**
+     * The email the user is attempting to authenticate with.
+     */
     #[Validate('required|string|email')]
     public string $email = '';
 
+    /**
+     * The password the user is attempting to authenticate with.
+     */
     #[Validate('required|string')]
     public string $password = '';
 
+    /**
+     * Determines if the users authentication should be remembered after login.
+     */
     #[Validate('boolean')]
     public bool $remember = false;
 
@@ -67,6 +76,6 @@ class LoginForm extends Form
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }

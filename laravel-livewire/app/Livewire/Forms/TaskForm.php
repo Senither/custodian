@@ -13,12 +13,21 @@ class TaskForm extends Form
      */
     public ?Task $task;
 
+    /**
+     * The message that should be used for the task.
+     */
     #[Validate('required|string|max:255')]
     public ?string $message = null;
 
+    /**
+     * The priority ID that should be associated with the task.
+     */
     #[Validate('required|integer|exists:priorities,id')]
     public ?int $priority = null;
 
+    /**
+     * The category ID that should be associated with the task.
+     */
     #[Validate('required|integer|exists:categories,id')]
     public ?int $category = null;
 
