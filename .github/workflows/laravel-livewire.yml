@@ -1,0 +1,103 @@
+name: Laravel + Livewire
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    paths:
+      - 'laravel-livewire/**'
+
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+
+    name: Pint
+
+    defaults:
+      run:
+        working-directory: laravel-livewire
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite, bcmath, json
+          tools: composer:v2
+          coverage: none
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: laravel-livewire/vendor
+          key: ubuntu-latest-8.2-composer-${{ hashFiles('composer.lock') }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Run Pint
+        run: vendor/bin/pint --test
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [ 8.2, 8.3, 8.4 ]
+
+    name: Test P${{ matrix.php }} - ${{ matrix.os }}
+
+    defaults:
+      run:
+        working-directory: laravel-livewire
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite, bcmath, json
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: laravel-livewire/vendor
+          key: ${{ matrix.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.lock') }}
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: laravel-livewire/node_modules
+          key: ${{ matrix.os }}-${{ matrix.php }}-node-modules-${{ hashFiles('yarn.lock') }}
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Create storage folders
+        run: mkdir -p storage/framework/{sessions,views,cache}
+
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Compile assets
+        run: npm run build
+
+      - name: Execute tests
+        run: vendor/bin/pest --parallel --coverage --min=100
