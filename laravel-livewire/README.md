@@ -1,66 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel + Livewire
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Laravel and Livewire version of Custodian running on PHP 8.2+
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [The Stack](#the-stack)
+- [Features](#features)
+- [Installation](#installation)
+    - [Docker](#docker)
+    - [Local Environment](#local-environment)
+- [Testing](#testing)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## The Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The backend is built with [Laravel 11](https://laravel.com/) and [Livewire 3](https://livewire.laravel.com/), with test coverage using [Pest 3](https://pestphp.com/), and [Pint](https://laravel.com/docs/11.x/pint#main-content) to ensure formatting consistency.
 
-## Learning Laravel
+For the frontend we're using [TailwindCSS 3](https://tailwindcss.com/) along with [DaisyUI](https://daisyui.com/) from the [template files](/template/), as well as [AlpineJS 3](https://alpinejs.dev/) that comes with Livewire to make modals and other in-browser features feel more snappy, all of this is built using [Vite 6](https://vite.dev/) and [NodeJS 18+](https://nodejs.org/).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The project is intended to be run within a Docker environment in production, and takes up around 150 MB of disk space when built, and around 300 MB of RAM when running.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This is a list of features for this version of Custodian that are outside the scope of the core [Custodian requirements](/README.md#requirements).
 
-## Laravel Sponsors
+- Event dispatching when creating new users
+    - Event listeners hooks into this and create our task categories and priorities models for us
+- Query scope limiter
+    - This helps prevent touching any data that doesn't belong to the authenticated user
+- Model observers
+    - Automatically clears the cache when a model is created, updated, or deleted
+- Model policies
+    - Ensures that the authenticated user can only see the actions they're allowed to perform (create, update, and delete buttons are hidden when the user doesn't have the permission)
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Following the Custodian requirements, you can choose to install the project using Docker or by setting up a local development environment.
 
-### Premium Partners
+### Docker
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Start by cloning the repository and going into this directory, all the following commands will be run from this directory.
 
-## Contributing
+```bash
+git clone https://github.com/Senither/custodian.git
+cd custodian/laravel-livewire
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+From here we can use the `docker compose` command to build and start the Docker container.
 
-## Code of Conduct
+```bash
+docker compose up -d
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You can now open the application in your browser by visiting [http://localhost:8000](http://localhost:8000).
 
-## Security Vulnerabilities
+### Local Environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Start by cloning the repository and going into this directory, all the following commands will be run from this directory.
 
-## License
+```bash
+git clone https://github.com/Senither/custodian.git
+cd custodian/laravel-livewire
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Next we can install all the dependencies using Composer and npm.
+
+```bash
+composer install
+npm install
+```
+
+When the node modules have been installed we can compile the assets.
+
+```bash
+# Starts a watcher that will recompile the assets when they change
+npm run dev
+# Or to compile the assets once for production
+npm run build
+```
+
+After the dependencies have been installed and our assets are ready we can copy the `.env.example` file to `.env` and generate a new application key.
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Now we can run the migrations to create the database tables and seed the database with some test data.
+
+```bash
+php artisan migrate --seed
+```
+
+Finally we can start the development server and open the application in our browser.
+
+```bash
+php artisan serve
+```
+
+You can now open the application in your browser by visiting [http://localhost:8000](http://localhost:8000).
+
+## Testing
+
+To run the test suite first ensure that you have the project [installed and it's up and running](#installation), then you can run the following command to run the tests.
+
+```bash
+# Run the test suite using Artisan
+php artisan test
+# Or to run the test suite using Pest directly
+vendor/bin/pest
+```
