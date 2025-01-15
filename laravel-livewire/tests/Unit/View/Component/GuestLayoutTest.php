@@ -9,7 +9,7 @@ it('extends Illuminate\View\Component', function () {
 });
 
 it('renders the expected view', function () {
-    $component = new GuestLayout();
+    $component = new GuestLayout;
 
     expect($component->render())
         ->toBeInstanceOf(View::class)

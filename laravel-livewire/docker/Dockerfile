@@ -1,5 +1,5 @@
 # Stage 1: Build Assets
-FROM node:18 as assets-builder
+FROM node:18 AS assets-builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm install
 RUN npm run build
 
 # Stage 2: Install PHP dependencies
-FROM composer:2 as php-builder
+FROM composer:2 AS php-builder
 
 WORKDIR /app
 

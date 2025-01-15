@@ -1,5 +1,3 @@
-version: '3.7'
-
 volumes:
     laravel:
 
@@ -11,6 +9,6 @@ services:
       dockerfile: docker/Dockerfile
     container_name: custodian-laravel-livewire
     ports:
-      - 8080:80
+      - 8000:80
     volumes:
       - laravel:/var/www/html/storage

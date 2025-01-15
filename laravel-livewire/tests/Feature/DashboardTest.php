@@ -2,6 +2,7 @@
 
 use App\Models\Task;
 use App\Models\User;
+use Livewire\Livewire;
 
 it('redirects to login for unauthenticated requests', function () {
     $response = $this->get('/dashboard');
@@ -22,6 +23,8 @@ it('can render the dashboard', function () {
 it('renders the tasks components', function () {
     $this->actingAs($user = User::factory()->create());
     Task::factory()->recycle($user)->create();
+
+    Livewire::withoutLazyLoading();
 
     $response = $this->get('/dashboard');
 
