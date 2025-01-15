@@ -8,9 +8,11 @@ use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+#[Lazy]
 #[Layout('layouts.app')]
 class RenderDashboardTasks extends Component
 {
@@ -27,6 +29,14 @@ class RenderDashboardTasks extends Component
     public function resetFilter(): void
     {
         $this->filter->reset();
+    }
+
+    /**
+     * Renders the placeholder while the component is being loaded.
+     */
+    public function placeholder(): View
+    {
+        return view('placeholders.render-dashboard-tasks-spinner');
     }
 
     /**
