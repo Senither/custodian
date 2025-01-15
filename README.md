@@ -30,8 +30,11 @@ When possible the app should also be built using the [template files](template) 
 
 Each version of Custodian can be found in its respective directory. The following is a list of the different versions of Custodian that have been built:
 
-    TBD
-
+- [Laravel + Livewire](laravel-livewire/)
+    - **Language**: PHP 8.2+
+    - **Backend**: Laravel, Livewire, Pest PHP, Pint
+    - **Frontend**: TailwindCSS, DaisyUI, AlpineJS, Vite, NodeJS 18+
+    - **Docker Image Size**: ~150 MB
 ## License
 
 This project is open-sourced software licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
