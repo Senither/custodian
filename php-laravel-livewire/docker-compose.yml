@@ -3,7 +3,7 @@ volumes:
 
 services:
   laravel:
-    image: senither/custodian-laravel-livewire:latest
+    image: senither/custodian-php-laravel-livewire:latest
     build:
       context: .
       dockerfile: docker/Dockerfile

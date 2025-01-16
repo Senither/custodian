@@ -1,11 +1,11 @@
-name: Laravel + Livewire
+name: PHP + Laravel + Livewire
 
 on:
   workflow_dispatch:
   workflow_call:
   push:
     paths:
-      - 'laravel-livewire/**'
+      - 'php-laravel-livewire/**'
 
 jobs:
   pint:
@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: laravel-livewire
+        working-directory: php-laravel-livewire
 
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
       - name: Cache composer dependencies
         uses: actions/cache@v4
         with:
-          path: laravel-livewire/vendor
+          path: php-laravel-livewire/vendor
           key: ubuntu-latest-8.2-composer-${{ hashFiles('composer.lock') }}
 
       - name: Install Dependencies
@@ -52,7 +52,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: laravel-livewire
+        working-directory: php-laravel-livewire
 
     steps:
       - name: Checkout code
@@ -69,13 +69,13 @@ jobs:
       - name: Cache composer dependencies
         uses: actions/cache@v4
         with:
-          path: laravel-livewire/vendor
+          path: php-laravel-livewire/vendor
           key: ${{ matrix.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.lock') }}
 
       - name: Cache node modules
         uses: actions/cache@v4
         with:
-          path: laravel-livewire/node_modules
+          path: php-laravel-livewire/node_modules
           key: ${{ matrix.os }}-${{ matrix.php }}-node-modules-${{ hashFiles('yarn.lock') }}
 
       - name: Copy .env

@@ -1,4 +1,4 @@
-# Laravel + Livewire
+# PHP + Laravel + Livewire
 
 This is a Laravel and Livewire version of Custodian running on PHP 8.2+
 
@@ -31,6 +31,7 @@ This is a list of features for this version of Custodian that are outside the sc
     - Automatically clears the cache when a model is created, updated, or deleted
 - Model policies
     - Ensures that the authenticated user can only see the actions they're allowed to perform (create, update, and delete buttons are hidden when the user doesn't have the permission)
+
 ## Installation
 
 Following the Custodian requirements, you can choose to install the project using Docker or by setting up a local development environment.
@@ -41,7 +42,7 @@ Start by cloning the repository and going into this directory, all the following
 
 ```bash
 git clone https://github.com/Senither/custodian.git
-cd custodian/laravel-livewire
+cd custodian/php-laravel-livewire
 ```
 
 From here we can use the `docker compose` command to build and start the Docker container.
@@ -58,7 +59,7 @@ Start by cloning the repository and going into this directory, all the following
 
 ```bash
 git clone https://github.com/Senither/custodian.git
-cd custodian/laravel-livewire
+cd custodian/php-laravel-livewire
 ```
 
 Next we can install all the dependencies using Composer and npm.
