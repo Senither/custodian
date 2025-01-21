@@ -3,14 +3,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build --preset=node_cluster",
+    "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "db:push": "npx prisma db push",
+    "db:pull": "npx prisma db pull",
+    "db:studio": "npx prisma studio",
+    "db:migrate:dev": "npx prisma migrate dev",
+    "db:migrate:status": "npx prisma migrate status",
+    "db:migrate:deploy": "npx prisma migrate deploy",
+    "db:migrate:reset": "npx prisma migrate reset"
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.13.1",
+    "@prisma/client": "^6.2.1",
+    "@prisma/nuxt": "^0.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "daisyui": "^4.12.23",
     "nuxt": "^3.15.2",
