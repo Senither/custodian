@@ -42,7 +42,7 @@ useHead({
                             <NuxtLink href="/profile">Profile</NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink href="/login">Logout</NuxtLink>
+                            <NuxtLink href="/logout">Logout</NuxtLink>
                         </li>
                     </ul>
                 </div>

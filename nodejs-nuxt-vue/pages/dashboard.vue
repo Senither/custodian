@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['authenticated'],
+})
+
 const tasks = ref([
     {
         completed: false,
