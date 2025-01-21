@@ -8,7 +8,7 @@ watch(error, (value) => {
         return
     }
 
-    message.value = value.message
+    message.value = value.reason
 })
 </script>
 
