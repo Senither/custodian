@@ -6,19 +6,24 @@ definePageMeta({
 
 const { fetch: refreshSession } = useUserSession()
 
+const errors = ref(null)
 const form = reactive({
     email: '',
     password: '',
 })
 
 async function onLogin() {
+    errors.value = null
+
     $fetch('/api/login', {
         method: 'POST',
         body: form,
     }).then(async () => {
         await refreshSession()
         await navigateTo('/')
-    }).catch(() => alert('Bad credentials'))
+    }).catch((error) => {
+        errors.value = error.data
+    })
 }
 </script>
 
@@ -27,12 +32,15 @@ async function onLogin() {
         <form class="card-body" @submit.prevent="onLogin">
             <h3 class="font-semibold text-lg">Sign in to Custodian</h3>
 
+            <ErrorMessage v-model="errors" />
+
             <div class="form-control mt-4">
                 <label class="label">
                     <span class="label-text">Email</span>
                 </label>
                 <input v-model="form.email" type="email" placeholder="email@company.com" class="input-bordered input"
                     autofocus required />
+                <InputError v-model="errors" name="email" />
             </div>
 
             <div class="form-control">
@@ -41,6 +49,7 @@ async function onLogin() {
                 </label>
                 <input v-model="form.password" type="password" placeholder="********" class="input-bordered input"
                     required />
+                <InputError v-model="errors" name="password" />
             </div>
 
             <div class="flex justify-between gap-4">

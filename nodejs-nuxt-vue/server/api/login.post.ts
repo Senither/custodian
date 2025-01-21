@@ -8,23 +8,30 @@ const schema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-    const { email, password } = await readValidatedBody(event, schema.parse)
+    const validatedBody = await readValidatedBody(event, schema.safeParse)
+    if (!validatedBody.success) {
+        throw createError({
+            statusCode: 400,
+            message: 'Missing required fields',
+            data: validatedBody.error,
+        })
+    }
 
     const user: User | null = await prisma.user.findFirst({
-        where: { email },
+        where: { email: validatedBody.data.email },
     })
 
     if (!user) {
         throw createError({
             statusCode: 401,
-            message: 'Bad credentials'
+            message: 'Invalid email or password'
         })
     }
 
-    if (!user.password || !await verifyPassword(user.password, password)) {
+    if (!user.password || !await verifyPassword(user.password, validatedBody.data.password)) {
         throw createError({
             statusCode: 401,
-            message: 'Bad credentials'
+            message: 'Invalid email or password'
         })
     }
 
