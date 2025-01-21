@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// TODO: Destroy the user session and redirect them to the login page
+const { clear: clearSession } = useUserSession()
 
-await navigateTo({
-    path: '/login'
-})
+await clearSession()
+await navigateTo('/login')
 </script>

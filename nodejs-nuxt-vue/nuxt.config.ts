@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@prisma/nuxt', '@nuxtjs/tailwindcss'],
+  modules: ['@prisma/nuxt', '@nuxtjs/tailwindcss', 'nuxt-auth-utils'],
   app: {
     rootAttrs: {
       id: 'custodian',

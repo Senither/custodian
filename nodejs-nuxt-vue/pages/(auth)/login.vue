@@ -3,15 +3,21 @@ definePageMeta({
     layout: 'auth',
 })
 
-const form = ref({
+const { fetch: refreshSession } = useUserSession()
+
+const form = reactive({
     email: '',
     password: '',
 })
 
 async function onLogin() {
-    console.log('login', form.value)
-
-    return navigateTo('/dashboard')
+    $fetch('/api/login', {
+        method: 'POST',
+        body: form,
+    }).then(async () => {
+        await refreshSession()
+        await navigateTo('/')
+    }).catch(() => alert('Bad credentials'))
 }
 </script>
 
