@@ -2,7 +2,7 @@
 CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT,
-    "email" TEXT NOT NULL,
+    "email" TEXT NOT NULL COLLATE NOCASE,
     "email_verified_at" DATETIME,
     "password" TEXT,
     "remember_token" TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "PasswordResetToken" (
-    "email" TEXT NOT NULL,
+    "email" TEXT NOT NULL COLLATE NOCASE,
     "token" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
