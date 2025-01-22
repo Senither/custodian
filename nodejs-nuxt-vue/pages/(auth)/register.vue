@@ -4,7 +4,10 @@ definePageMeta({
     middleware: ['unauthenticated'],
 })
 
-const form = ref({
+const { fetch: refreshSession } = useUserSession()
+
+const errors = ref(null)
+const form = reactive({
     name: '',
     email: '',
     password: '',
@@ -12,7 +15,17 @@ const form = ref({
 })
 
 async function onRegister() {
-    console.log('register', form.value)
+    errors.value = null
+
+    $fetch('/api/register', {
+        method: 'POST',
+        body: form,
+    }).then(async () => {
+        await refreshSession()
+        await navigateTo('/')
+    }).catch((error) => {
+        errors.value = error.data
+    })
 }
 </script>
 
@@ -21,12 +34,15 @@ async function onRegister() {
         <form class="card-body" @submit.prevent="onRegister">
             <h3 class="font-semibold text-lg">Sign up for Custodian</h3>
 
+            <ErrorMessage v-model="errors" />
+
             <div class="form-control mt-4">
                 <label class="label">
                     <span class="label-text">Your name</span>
                 </label>
                 <input v-model="form.name" type="text" placeholder="Eg. John Doe" class="input-bordered input" autofocus
                     required autocomplete="name" />
+                <InputError v-model="errors" name="name" />
             </div>
 
             <div class="form-control mt-4">
@@ -35,6 +51,7 @@ async function onRegister() {
                 </label>
                 <input v-model="form.email" type="email" placeholder="email@company.com" class="input-bordered input"
                     required autocomplete="username" />
+                <InputError v-model="errors" name="email" />
             </div>
 
             <div class="form-control mt-4">
@@ -43,6 +60,7 @@ async function onRegister() {
                 </label>
                 <input v-model="form.password" type="password" placeholder="********" class="input-bordered input"
                     required autocomplete="new-password" />
+                <InputError v-model="errors" name="password" />
             </div>
 
             <div class="form-control mt-4">
@@ -51,6 +69,7 @@ async function onRegister() {
                 </label>
                 <input v-model="form.password_confirmation" type="password" placeholder="********"
                     class="input-bordered input" required autocomplete="new-password" />
+                <InputError v-model="errors" name="password_confirmation" />
             </div>
 
             <div class="form-control mt-6">

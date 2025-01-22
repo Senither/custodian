@@ -14,7 +14,7 @@ watch(error, (value) => {
     const errors = error.value?.data?.issues ?? []
 
     for (let err of errors) {
-        if (err.validation === name) {
+        if ((err?.path ?? []).includes(name)) {
             messages.value.push(err.message)
         }
     }
