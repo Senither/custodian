@@ -17,7 +17,7 @@ const form = reactive({
 async function onRegister() {
     errors.value = null
 
-    $fetch('/api/register', {
+    $fetch('/api/auth/register', {
         method: 'POST',
         body: form,
     }).then(async () => {

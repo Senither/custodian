@@ -15,7 +15,7 @@ const form = reactive({
 async function onLogin() {
     errors.value = null
 
-    $fetch('/api/login', {
+    $fetch('/api/auth/login', {
         method: 'POST',
         body: form,
     }).then(async () => {

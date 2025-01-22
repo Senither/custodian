@@ -4,12 +4,23 @@ definePageMeta({
     middleware: ['unauthenticated'],
 })
 
-const form = ref({
+const errors = ref(null)
+const message = ref(null)
+const form = reactive({
     email: '',
 })
 
 async function onSendPasswordResetLink() {
-    console.log('send password reset link', form)
+    $fetch('/api/auth/password-reset', {
+        method: 'POST',
+        body: form,
+    }).then((data) => {
+        errors.value = null
+        message.value = data.message
+    }).catch((error) => {
+        errors.value = error.data
+        message.value = null
+    })
 }
 </script>
 
@@ -17,8 +28,13 @@ async function onSendPasswordResetLink() {
     <div class="flex bg-base-100 shadow-2xl w-96 card">
         <form class="card-body" @submit.prevent="onSendPasswordResetLink">
             <h3 class="font-semibold text-lg">Forgot your password?</h3>
-            <p class="text-sm">Don't fret! Just type in your email and we will send you a code to reset your password!
+            <p class="text-sm">
+                Don't fret! Just type in your email and we will send you a code to reset your password!
             </p>
+
+            <div v-if="message" class="font-medium text-info text-sm">
+                {{ message }}
+            </div>
 
             <div class="form-control mt-4">
                 <label class="label">
@@ -26,6 +42,7 @@ async function onSendPasswordResetLink() {
                 </label>
                 <input v-model="form.email" type="email" placeholder="email@company.com" class="input-bordered input"
                     autofocus required />
+                <InputError v-model="errors" name="email" />
             </div>
 
             <div class="form-control mt-6">
