@@ -1,0 +1,14 @@
+volumes:
+    nuxt:
+
+services:
+  nuxt:
+    image: senither/custodian-nodejs-nuxt-vue:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: custodian-nuxt-vue
+    environment:
+      - NUXT_SESSION_PASSWORD="GDDAGiezp&1Vez5O&5mpMqh0TGV#ebXrrf#9E86P5B!qJ#8LJ3cG?3GGSPD"
+    ports:
+      - 8000:3000
