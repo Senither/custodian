@@ -31,6 +31,8 @@ export default defineEventHandler(async (event) => {
         },
     })
 
+    createDefaultUserRecords(user).catch(console.error)
+
     await replaceUserSession(event, {
         user: {
             id: user.id,
