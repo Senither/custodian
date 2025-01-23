@@ -1,6 +1,10 @@
 import { User } from '@prisma/client';
 import prisma from '~/lib/prisma';
 
+export type AuthenticatedUserResult =
+    | { user: User, err: null }
+    | { user: null, err: any }
+
 /**
  * Loads the authenticated user from the database using the available
  * session data, if it fails to load the authenticated user it will
@@ -9,7 +13,7 @@ import prisma from '~/lib/prisma';
  * @param event The event object
  * @returns The authenticated user or an error
  */
-export default async function (event: any): Promise<{ user: User, err: null } | { user: null, err: any }> {
+export default async function (event: any): Promise<AuthenticatedUserResult> {
     const session = await getUserSession(event)
     if (Object.keys(session).length === 0) {
         return wrapError(createErrorResponse(event, 401, 'Unauthorized'))
@@ -33,6 +37,16 @@ export default async function (event: any): Promise<{ user: User, err: null } | 
     }
 
     return { user, err: null }
+}
+
+/**
+ * Checks if the given result is an authenticated user.
+ *
+ * @param result The result that should be checked
+ * @returns Whether the result is an authenticated user
+ */
+export function isAuthenticatedUser(result: AuthenticatedUserResult): result is { user: User, err: null } {
+    return result.err === null
 }
 
 /**

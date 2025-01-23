@@ -1,20 +1,21 @@
 import { User } from '@prisma/client'
 import { z } from 'zod'
 import prisma from '~/lib/prisma'
+import { isAuthenticatedUser } from '~/server/utils/loadAuthenticatedUserFromSession'
 
 export default defineEventHandler(async (event) => {
-    const { user, err } = await loadAuthenticatedUserFromSession(event)
-    if (err) {
-        return err
+    const result = await loadAuthenticatedUserFromSession(event)
+    if (!isAuthenticatedUser(result)) {
+        return result.err
     }
 
-    const validatedBody = await readValidatedBody(event, createValidationSchema(user).safeParseAsync)
+    const validatedBody = await readValidatedBody(event, createValidationSchema(result.user).safeParseAsync)
     if (!validatedBody.success) {
         return createErrorResponse(event, 400, 'Validation failed', validatedBody.error)
     }
 
     await prisma.user.update({
-        where: { id: user.id },
+        where: { id: result.user.id },
         data: validatedBody.data,
     })
 
@@ -74,7 +75,7 @@ function createValidationSchema(user: User) {
 
         // Add check to ensure that the current_password is valid and matches the user's current password
         .refine(async data => {
-            if (!data.current_password) {
+            if (!data.current_password || !user.password) {
                 return true
             }
 
