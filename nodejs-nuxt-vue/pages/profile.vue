@@ -14,7 +14,7 @@ const userForm = reactive({
     email: '',
 })
 
-const passwordForm = ref({
+const passwordForm = reactive({
     current_password: '',
     password: '',
     password_confirmation: '',
@@ -27,6 +27,21 @@ const updateProfileInformation = () => {
     }).then(() => {
         errors.value = null
     }).catch((error) => {
+        errors.value = error.data
+    })
+}
+
+const updatePassword = () => {
+    $fetch('/api/user', {
+        method: 'PUT',
+        body: passwordForm,
+    }).then(() => {
+        errors.value = null
+        passwordForm.current_password = ''
+        passwordForm.password = ''
+        passwordForm.password_confirmation = ''
+    }).catch((error) => {
+        passwordForm.current_password = ''
         errors.value = error.data
     })
 }
@@ -102,6 +117,7 @@ const updateProfileInformation = () => {
                             </div>
                             <input v-model="passwordForm.current_password" type="password"
                                 class="input-bordered w-full max-w-xs input" />
+                                <InputError v-model="errors" name="current_password" />
                         </label>
                         <label class="form-control px-4 w-full">
                             <div class="label">
@@ -109,6 +125,7 @@ const updateProfileInformation = () => {
                             </div>
                             <input v-model="passwordForm.password" type="password"
                                 class="input-bordered w-full max-w-xs input" />
+                                <InputError v-model="errors" name="password" />
                         </label>
                         <label class="form-control px-4 w-full">
                             <div class="label">
@@ -116,6 +133,7 @@ const updateProfileInformation = () => {
                             </div>
                             <input v-model="passwordForm.password_confirmation" type="password"
                                 class="input-bordered w-full max-w-xs input" />
+                                <InputError v-model="errors" name="password_confirmation" />
                         </label>
                     </div>
 
@@ -127,7 +145,6 @@ const updateProfileInformation = () => {
                 </form>
             </div>
         </section>
-
 
         <div class="divider"></div>
 
