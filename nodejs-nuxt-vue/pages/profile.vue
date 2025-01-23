@@ -8,6 +8,9 @@ $fetch('/api/user').then((response) => {
     userForm.email = response.data.email
 })
 
+const profileActionMessage = ref()
+const passwordActionMessage = ref()
+
 const deleteAccountModal = ref(false)
 
 const errors = ref(null)
@@ -28,6 +31,8 @@ const updateProfileInformation = () => {
         body: userForm,
     }).then(() => {
         errors.value = null
+
+        profileActionMessage.value.show()
     }).catch((error) => {
         errors.value = error.data
     })
@@ -42,6 +47,8 @@ const updatePassword = () => {
         passwordForm.current_password = ''
         passwordForm.password = ''
         passwordForm.password_confirmation = ''
+
+        passwordActionMessage.value.show()
     }).catch((error) => {
         passwordForm.current_password = ''
         errors.value = error.data
@@ -96,6 +103,9 @@ const updatePassword = () => {
                     <div class="my-0 py-0 divider"></div>
 
                     <div class="flex justify-end items-center px-4 py-3">
+                        <ActionMessage ref="profileActionMessage">
+                            Saved changes
+                        </ActionMessage>
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -142,6 +152,9 @@ const updatePassword = () => {
                     <div class="my-0 py-0 divider"></div>
 
                     <div class="flex justify-end items-center px-4 py-3">
+                        <ActionMessage ref="passwordActionMessage">
+                            Password changed successfully
+                        </ActionMessage>
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -167,7 +180,9 @@ const updatePassword = () => {
                     retain.
                 </p>
 
-                <button class="text-error-content btn btn-error" @click="deleteAccountModal = true">Delete Account</button>
+                <button class="text-error-content btn btn-error" @click="deleteAccountModal = true">
+                    Delete Account
+                </button>
             </div>
         </div>
     </div>
