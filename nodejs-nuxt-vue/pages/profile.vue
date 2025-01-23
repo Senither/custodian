@@ -3,7 +3,13 @@ definePageMeta({
     middleware: ['authenticated'],
 })
 
-const userForm = ref({
+$fetch('/api/user').then((response) => {
+    userForm.name = response.data.name
+    userForm.email = response.data.email
+})
+
+const errors = ref(null)
+const userForm = reactive({
     name: '',
     email: '',
 })
@@ -14,6 +20,16 @@ const passwordForm = ref({
     password_confirmation: '',
 })
 
+const updateProfileInformation = () => {
+    $fetch('/api/user', {
+        method: 'PUT',
+        body: userForm,
+    }).then(() => {
+        errors.value = null
+    }).catch((error) => {
+        errors.value = error.data
+    })
+}
 </script>
 
 <template>
@@ -47,6 +63,7 @@ const passwordForm = ref({
                             </div>
                             <input v-model="userForm.name" type="text" placeholder="Your name"
                                 class="input-bordered w-full max-w-xs input" />
+                            <InputError v-model="errors" name="name" />
                         </label>
 
                         <label class="form-control px-4 w-full">
@@ -55,6 +72,7 @@ const passwordForm = ref({
                             </div>
                             <input v-model="userForm.email" type="email" placeholder="name@company.com"
                                 class="input-bordered w-full max-w-xs input" />
+                            <InputError v-model="errors" name="email" />
                         </label>
                     </div>
 
