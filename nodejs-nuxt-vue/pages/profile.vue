@@ -8,6 +8,8 @@ $fetch('/api/user').then((response) => {
     userForm.email = response.data.email
 })
 
+const { clear: clearSession } = useUserSession()
+
 const profileActionMessage = ref()
 const passwordActionMessage = ref()
 
@@ -23,6 +25,10 @@ const passwordForm = reactive({
     current_password: '',
     password: '',
     password_confirmation: '',
+})
+
+const deleteAccountForm = reactive({
+    password: '',
 })
 
 const updateProfileInformation = () => {
@@ -52,6 +58,19 @@ const updatePassword = () => {
     }).catch((error) => {
         passwordForm.current_password = ''
         errors.value = error.data
+    })
+}
+
+const deleteAccount = () => {
+    $fetch('/api/user', {
+        method: 'DELETE',
+        body: deleteAccountForm,
+    }).then(async () => {
+        await clearSession()
+        await navigateTo('/login')
+    }).catch((error) => {
+        errors.value = error.data
+        deleteAccountForm.password = ''
     })
 }
 </script>
@@ -201,7 +220,7 @@ const updatePassword = () => {
             </h2>
         </div>
 
-        <form class="pb-6" method="dialog">
+        <form class="pb-6" @submit.prevent="deleteAccount">
             <p class="mt-1 px-6 text-sm">
                 Once your account is deleted, all of its resources and data will be permanently deleted.
                 Please enter your password to confirm you would like to permanently delete your account.
@@ -213,7 +232,9 @@ const updatePassword = () => {
                 </div>
 
                 <input id="password" name="password" type="password" class="input-bordered w-full max-w-xs input"
-                    placeholder="Password" />
+                    placeholder="Password" v-model="deleteAccountForm.password" />
+
+                <ErrorMessage v-model="errors" />
             </label>
 
             <div class="divider"></div>
