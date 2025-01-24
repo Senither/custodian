@@ -1,8 +1,12 @@
+<script setup lang="ts">
+const runtime = useRuntimeConfig()
+</script>
+
 <template>
     <div class="flex justify-between items-center mx-auto max-w-3xl container">
         <aside class="items-center grid-flow-col">
             <p>
-                Custodian - NodeJS + Nuxt + Vue - Checkout the source code on GitHub
+                {{ runtime.public.appName }} - {{ runtime.public.appDescriptor }} - Checkout the source code on GitHub
             </p>
         </aside>
         <nav class="flex">

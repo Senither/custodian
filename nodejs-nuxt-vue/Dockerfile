@@ -2,6 +2,8 @@
 FROM node:22-alpine AS base
 
 ENV NODE_ENV=production
+ENV APP_NAME="Custodian"
+ENV APP_DESCRIPTOR="Node + Nuxt + Vue"
 ENV DATABASE_URL="file:/app/database.sqlite"
 
 WORKDIR /app

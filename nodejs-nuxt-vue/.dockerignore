@@ -6,3 +6,5 @@ prisma/*.db
 prisma/*.sqlite
 prisma/*.db-journal
 prisma/*.sqlite-journal
+.env
+README.md
