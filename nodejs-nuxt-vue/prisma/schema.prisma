@@ -36,9 +36,9 @@ model Task {
   category_id Int
   created_at  DateTime @default(now())
 
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  priority   Priority @relation(fields: [priority_id], references: [id])
-  categories Category @relation(fields: [category_id], references: [id])
+  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  priority Priority @relation(fields: [priority_id], references: [id])
+  category Category @relation(fields: [category_id], references: [id])
 }
 
 model Priority {
