@@ -4,7 +4,11 @@ definePageMeta({
 })
 
 const isLoadingInitialPage = ref(true)
+
 const tasks = ref([])
+const categories = ref([])
+const priorities = ref([])
+
 const filters = reactive({
     query: null,
     status: null,
@@ -15,6 +19,14 @@ const filters = reactive({
 $fetch('/api/tasks').then((res) => {
     tasks.value = res.data
     isLoadingInitialPage.value = false
+})
+
+$fetch('/api/categories').then((res) => {
+    categories.value = res.data
+})
+
+$fetch('/api/priorities').then((res) => {
+    priorities.value = res.data
 })
 
 const updateTaskStatus = (task: Task, status: boolean) => {
@@ -103,10 +115,9 @@ const resetFilter = () => {
                             </div>
                             <select class="select-bordered select-sm select" v-model="filters.category">
                                 <option :value="null" disabled selected>Pick one</option>
-                                <option :value="1">House Stuff</option>
-                                <option :value="2">Work</option>
-                                <option :value="3">Learning</option>
-                                <option :value="4">Meeting</option>
+                                <option v-for="val of categories" :value="val.id" :key="val.id">
+                                    {{ val.name }}
+                                </option>
                             </select>
                         </label>
 
@@ -116,10 +127,9 @@ const resetFilter = () => {
                             </div>
                             <select class="select-bordered select-sm select" v-model="filters.priority">
                                 <option :value="null" disabled selected>Pick one</option>
-                                <option :value="1">Low</option>
-                                <option :value="2">Medium</option>
-                                <option :value="3">High</option>
-                                <option :value="4">Highest</option>
+                                <option v-for="val of priorities" :value="val.id" :key="val.id">
+                                    {{ val.name }}
+                                </option>
                             </select>
                         </label>
 
