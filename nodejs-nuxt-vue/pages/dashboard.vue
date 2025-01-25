@@ -5,9 +5,18 @@ definePageMeta({
 
 const isLoadingInitialPage = ref(true)
 
+const isCreating = ref(false)
+
 const tasks = ref([])
 const categories = ref([])
 const priorities = ref([])
+
+const errors = ref(null)
+const form = reactive({
+    message: '',
+    category_id: null,
+    priority_id: null,
+})
 
 const filters = reactive({
     query: null,
@@ -54,7 +63,7 @@ const filteredTasks = computed(() => {
 
 const hasFilters = computed(() => {
     return filters.query
-        || filters.status
+        || filters.status != null
         || filters.category
         || filters.priority
 })
@@ -65,12 +74,34 @@ const resetFilter = () => {
     filters.category = null
     filters.priority = null
 }
+
+const createTask = () => {
+    $fetch('/api/tasks', {
+        method: 'POST',
+        body: form,
+    }).then(() => {
+        loadTasks()
+        closeCreateModal()
+    }).catch((error) => {
+        errors.value = error.data
+    })
+}
+
+const closeCreateModal = () => {
+    isCreating.value = false
+
+    errors.value = null
+
+    form.message = ''
+    form.category_id = null
+    form.priority_id = null
+}
 </script>
 
 <template>
     <div class="flex flex-col gap-4">
         <div class="flex justify-between items-center px-6 md:px-0">
-            <button class="btn btn-primary">Add Task</button>
+            <button @click="isCreating = true" class="btn btn-primary">Add Task</button>
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="bg-base-100 m-1 btn">
@@ -177,5 +208,59 @@ const resetFilter = () => {
             <TaskCard v-else v-for="task in filteredTasks" :task="task" :key="task.id" :categories="categories"
                 :priorities="priorities" @statusChanged="val => updateTaskStatus(task, val)" @taskDeleted="loadTasks" />
         </div>
+
+        <Modal :open="isCreating" @close="closeCreateModal">
+            <div class="flex items-center gap-4 p-6">
+                <svg class="w-8 h-8 text-primary" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18">
+                    </path>
+                </svg>
+                <h3 class="font-bold text-lg">Creating new Task</h3>
+            </div>
+
+            <form @submit.prevent="createTask" class="flex flex-col gap-4 px-6">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">What is the task?</span>
+                    </div>
+                    <input v-model="form.message" type="text" placeholder="Eg. Do the thing..."
+                        class="input-bordered w-full input" />
+                    <InputError v-model="errors" name="message" class="mt-2" />
+                </label>
+
+                <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Category</span>
+                        </div>
+                        <select v-model="form.category_id" class="select-bordered select">
+                            <option :value="null">Pick one</option>
+                            <option v-for="val of categories" :value="val.id" :key="val.id">{{ val.name }}</option>
+                        </select>
+                        <InputError v-model="errors" name="category_id" class="mt-2" />
+                    </label>
+
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Priority</span>
+                        </div>
+                        <select v-model="form.priority_id" class="select-bordered select">
+                            <option :value="null">Pick one</option>
+                            <option v-for="val of priorities" :value="val.id" :key="val.id">{{ val.name }}</option>
+                        </select>
+                        <InputError v-model="errors" name="priority_id" class="mt-2" />
+                    </label>
+                </div>
+            </form>
+
+            <div method="dialog" class="modal-backdrop">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
+                    <button @click="createTask" class="text-primary-content btn btn-primary">Create Task</button>
+                    <a @click="closeCreateModal" class="bg-base-200 border border-base-300 btn" tabindex="0">Close</a>
+                </div>
+            </div>
+        </Modal>
     </div>
 </template>
