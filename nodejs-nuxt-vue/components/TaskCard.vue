@@ -2,7 +2,7 @@
 const emit = defineEmits(['statusChanged'])
 
 const { task } = useAttrs()
-const status = ref(task.completed)
+const status = ref(task.status)
 
 watch(status, () => {
     emit('statusChanged', status.value)
@@ -19,14 +19,14 @@ watch(status, () => {
                 <input v-model="status" type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" />
 
                 <div class="cursor-pointer" @click="status = !status">
-                    <h4 class="font-semibold text-lg">{{ task.title }}</h4>
+                    <h4 class="font-semibold text-lg">{{ task.message }}</h4>
                     <div class="flex gap-3">
                         <span class="py-2 text-secondary-content cursor-pointer badge badge-secondary badge-sm">
-                            priority: {{ task.priority }}
+                            priority: {{ task.priority.name }}
                         </span>
 
                         <span class="py-2 text-secondary-content cursor-pointer badge badge-secondary badge-sm">
-                            category: {{ task.category }}
+                            category: {{ task.category.name }}
                         </span>
                     </div>
                 </div>
