@@ -59,6 +59,8 @@ const filteredTasks = computed(() => {
             && (!filters.category || task.category.id === filters.category)
             && (!filters.priority || task.priority.id === filters.priority)
     })
+        .sort((a, b) => a.message < b.message ? 1 : -1)
+        .sort((a, b) => a.status > b.status ? 1 : -1)
 })
 
 const hasFilters = computed(() => {
