@@ -16,9 +16,8 @@ const filters = reactive({
     priority: null,
 })
 
-$fetch('/api/tasks').then((res) => {
-    tasks.value = res.data
-    isLoadingInitialPage.value = false
+onMounted(() => {
+    loadTasks()
 })
 
 $fetch('/api/categories').then((res) => {
@@ -34,6 +33,13 @@ const updateTaskStatus = (task: Task, status: boolean) => {
     $fetch(`/api/tasks/${task.id}`, {
         method: 'PUT',
         body: { status },
+    })
+}
+
+const loadTasks = () => {
+    $fetch('/api/tasks').then((res) => {
+        tasks.value = res.data
+        isLoadingInitialPage.value = false
     })
 }
 
@@ -168,8 +174,8 @@ const resetFilter = () => {
                 </div>
             </div>
 
-            <TaskCard v-else v-for="task in filteredTasks" :task="task" :key="task.id"
-                @statusChanged="val => updateTaskStatus(task, val)" />
+            <TaskCard v-else v-for="task in filteredTasks" :task="task" :key="task.id" :categories="categories"
+                :priorities="priorities" @statusChanged="val => updateTaskStatus(task, val)" @taskDeleted="loadTasks" />
         </div>
     </div>
 </template>
