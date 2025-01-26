@@ -3,7 +3,8 @@ const { loggedIn } = useUserSession()
 
 if (loggedIn.value) {
     await navigateTo('/dashboard')
-} else {
+}
+else {
     await navigateTo('/login')
 }
 </script>

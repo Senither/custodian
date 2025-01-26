@@ -13,7 +13,7 @@ watch(error, (value) => {
 </script>
 
 <template>
-    <div class="font-medium text-error text-sm" v-if="message.length > 0">
+    <div v-if="message.length > 0" class="font-medium text-error text-sm">
         <p>{{ message }}</p>
     </div>
 </template>

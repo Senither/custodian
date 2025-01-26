@@ -13,7 +13,7 @@ watch(error, (value) => {
 
     const errors = error.value?.data?.issues ?? []
 
-    for (let err of errors) {
+    for (const err of errors) {
         if ((err?.path ?? []).includes(name)) {
             messages.value.push(err.message)
         }
@@ -22,9 +22,11 @@ watch(error, (value) => {
 </script>
 
 <template>
-    <div class="font-medium text-error text-sm" v-if="messages.length > 0">
+    <div v-if="messages.length > 0" class="font-medium text-error text-sm">
         <ul>
-            <li v-for="message of messages">{{ message }}</li>
+            <li v-for="message of messages" :key="message">
+                {{ message }}
+            </li>
         </ul>
     </div>
 </template>

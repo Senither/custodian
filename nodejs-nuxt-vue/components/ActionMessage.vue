@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const visible = ref(false)
 
-const show = () => {
+function show() {
     visible.value = true
 
     setTimeout(() => {

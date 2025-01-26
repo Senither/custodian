@@ -1,5 +1,5 @@
-import { User } from '@prisma/client';
-import prisma from '~/lib/prisma';
+import type { User } from '@prisma/client'
+import prisma from '~/lib/prisma'
 
 export type AuthenticatedUserResult =
     | { user: User, err: null }
@@ -19,7 +19,7 @@ export default async function (event: any): Promise<AuthenticatedUserResult> {
         return wrapError(createErrorResponse(event, 401, 'Unauthorized'))
     }
 
-    if (!session.user || !session.user.hasOwnProperty('id')) {
+    if (!session.user || !('id' in session.user)) {
         return wrapError(createErrorResponse(event, 400, 'Invalid session data'))
     }
 

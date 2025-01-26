@@ -1,6 +1,6 @@
-import { User } from '@prisma/client';
-import { z } from 'zod';
-import prisma from '~/lib/prisma';
+import type { User } from '@prisma/client'
+import { z } from 'zod'
+import prisma from '~/lib/prisma'
 
 export default function () {
     return {
@@ -9,11 +9,11 @@ export default function () {
                 id: true,
                 name: true,
                 created_at: true,
-            }
+            },
         },
 
         param: z.object({
-            id: z.number({ coerce: true }).positive().int()
+            id: z.number({ coerce: true }).positive().int(),
         }),
 
         createModelSchema: (user: User) => {
@@ -29,8 +29,8 @@ export default function () {
                     return await prisma.priority.count({
                         where: {
                             id: data.priority_id,
-                            user: user,
-                        }
+                            user,
+                        },
                     }) > 0
                 }, {
                     message: 'The provided priority ID does not exist',
@@ -42,8 +42,8 @@ export default function () {
                     return await prisma.category.count({
                         where: {
                             id: data.category_id,
-                            user: user,
-                        }
+                            user,
+                        },
                     }) > 0
                 }, {
                     message: 'The provided category ID does not exist',
@@ -67,8 +67,8 @@ export default function () {
                     return await prisma.priority.count({
                         where: {
                             id: data.priority_id,
-                            user: user,
-                        }
+                            user,
+                        },
                     }) > 0
                 }, {
                     message: 'The provided priority ID does not exist',
@@ -84,8 +84,8 @@ export default function () {
                     return await prisma.category.count({
                         where: {
                             id: data.category_id,
-                            user: user,
-                        }
+                            user,
+                        },
                     }) > 0
                 }, {
                     message: 'The provided category ID does not exist',

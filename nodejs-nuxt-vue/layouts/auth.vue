@@ -23,7 +23,8 @@ useHead({
     </main>
 
     <footer
-        class="flex justify-center items-center bg-base-100 -mt-[3.54rem] px-4 py-3 border-t border-base-300 w-full">
+        class="flex justify-center items-center bg-base-100 -mt-[3.54rem] px-4 py-3 border-t border-base-300 w-full"
+    >
         <AppFooter />
     </footer>
 </template>

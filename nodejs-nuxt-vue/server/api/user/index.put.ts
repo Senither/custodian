@@ -1,4 +1,4 @@
-import { User } from '@prisma/client'
+import type { User } from '@prisma/client'
 import { z } from 'zod'
 import prisma from '~/lib/prisma'
 import { isAuthenticatedUser } from '~/server/utils/loadAuthenticatedUserFromSession'
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     return {
         status: 200,
         message: 'User details updated successfully',
-        data: validatedBody.data
+        data: validatedBody.data,
     }
 })
 
@@ -35,7 +35,7 @@ function createValidationSchema(user: User) {
         password_confirmation: z.string().optional(),
     })
         // Add check to ensure the email is unique if it's being updated, with the exception of the current user's email
-        .refine(async data => {
+        .refine(async (data) => {
             if (!data.email) {
                 return true
             }
@@ -46,7 +46,7 @@ function createValidationSchema(user: User) {
         })
 
         // Add check to ensure the password and password_confirmation fields match when updating the password
-        .refine(async data => {
+        .refine(async (data) => {
             if (!data.password) {
                 return true
             }
@@ -62,7 +62,7 @@ function createValidationSchema(user: User) {
         })
 
         // Add check to ensure the current_password is provided if the password is being updated
-        .refine(data => {
+        .refine((data) => {
             if (!data.password) {
                 return true
             }
@@ -74,7 +74,7 @@ function createValidationSchema(user: User) {
         })
 
         // Add check to ensure that the current_password is valid and matches the user's current password
-        .refine(async data => {
+        .refine(async (data) => {
             if (!data.current_password || !user.password) {
                 return true
             }
@@ -86,7 +86,7 @@ function createValidationSchema(user: User) {
         })
 
         // Transform the data to remove verification fields
-        .transform(async data => {
+        .transform(async (data) => {
             if (data.current_password && data.password && data.password_confirmation) {
                 data.password = await hashPassword(data.password)
             }

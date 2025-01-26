@@ -4,6 +4,8 @@ import { Dialog, DialogPanel } from '@headlessui/vue'
 defineProps({
     open: Boolean,
 })
+
+defineEmits(['close'])
 </script>
 
 <template>

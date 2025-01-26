@@ -1,4 +1,3 @@
-
 export default function (event: any, status: number, reason: string, data: any = null): any {
     const response = { status, reason }
 

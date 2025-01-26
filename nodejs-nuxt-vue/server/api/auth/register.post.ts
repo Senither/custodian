@@ -1,6 +1,6 @@
-import prisma from '~/lib/prisma'
+import type { User } from '@prisma/client'
 import { z } from 'zod'
-import { User } from '@prisma/client'
+import prisma from '~/lib/prisma'
 
 const schema = z.object({
     name: z.string().min(2),
@@ -48,6 +48,6 @@ export default defineEventHandler(async (event) => {
         user: {
             id: user.id,
             name: user.name,
-        }
+        },
     }
 })

@@ -49,9 +49,7 @@ export default defineEventHandler(async (event) => {
 function generateToken(length: number = 64): string {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-    return Array<string>(length)
-        .fill('')
+    return Array.from({ length })
         .map(() => charset.charAt(Math.random() * charset.length))
         .join('')
 }
-

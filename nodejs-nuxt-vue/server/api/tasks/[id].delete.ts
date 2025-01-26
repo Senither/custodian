@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         },
     })
 
-    if (task == 0) {
+    if (task === 0) {
         return createErrorResponse(event, 404, 'No record found for the provided task ID')
     }
 
