@@ -30,10 +30,16 @@ When possible the app should also be built using the [template files](template) 
 
 Each version of Custodian can be found in its respective directory. The following is a list of the different versions of Custodian that have been built:
 
+- [Nuxt + Vue](node-nuxt-vue/)
+    - **Language**: Node v22 (Can work with v18+)
+    - **Backend**: Nuxt, Nuxt Auth Utils, Zod, Prisma, ESLint
+    - **Frontend**: TailwindCSS, DaisyUI, Vue, Vue Router
+    - **Docker Image Size**: ~177 MB
+
 - [Laravel + Livewire](php-laravel-livewire/)
-    - **Language**: PHP 8.2+
+    - **Language**: PHP v8.2+
     - **Backend**: Laravel, Livewire, Pest PHP, Pint
-    - **Frontend**: TailwindCSS, DaisyUI, AlpineJS, Vite, NodeJS 18+
+    - **Frontend**: TailwindCSS, DaisyUI, AlpineJS, Vite
     - **Docker Image Size**: ~150 MB
 
 ## License
