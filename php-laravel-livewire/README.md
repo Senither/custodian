@@ -17,7 +17,7 @@ The backend is built with [Laravel 11](https://laravel.com/) and [Livewire 3](ht
 
 For the frontend we're using [TailwindCSS 3](https://tailwindcss.com/) along with [DaisyUI](https://daisyui.com/) from the [template files](/template/), as well as [AlpineJS 3](https://alpinejs.dev/) that comes with Livewire to make modals and other in-browser features feel more snappy, all of this is built using [Vite 6](https://vite.dev/) and [NodeJS 18+](https://nodejs.org/).
 
-The project is intended to be run within a Docker environment in production, and takes up around 150 MB of disk space when built, and around 300 MB of RAM when running.
+The project is intended to be run within a Docker environment in production, and takes up around 150 MB of disk space when built, and around ~75 MB of RAM when running.
 
 ## Features
 
