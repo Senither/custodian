@@ -1,0 +1,33 @@
+name: Node + Nuxt + Vue
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    paths:
+      - 'node-nuxt-vue/**'
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    name: ESLint
+
+    defaults:
+      run:
+        working-directory: node-nuxt-vue
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint

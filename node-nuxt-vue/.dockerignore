@@ -1,0 +1,10 @@
+/.git
+/.nuxt
+/.output
+/node_modules
+prisma/*.db
+prisma/*.sqlite
+prisma/*.db-journal
+prisma/*.sqlite-journal
+.env
+README.md
