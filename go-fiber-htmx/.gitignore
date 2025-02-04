@@ -33,3 +33,7 @@ public/**/*.js
 
 # env file
 .env
+
+# Database
+*.sqlite
+*.db
