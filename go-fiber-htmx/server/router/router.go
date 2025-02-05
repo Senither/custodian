@@ -1,6 +1,8 @@
 package router
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/senither/custodian/server/handler"
@@ -16,13 +18,13 @@ func RegisterRoutes(app *fiber.App) {
 
 func registerViewRoutes(app *fiber.App) {
 	// Authenticated routes
-	app.Get("/dashboard", handler.RenderDashboard)
-	app.Get("/profile", handler.RenderProfile)
+	app.Get("/dashboard", createViewWithLayoutHandler("dashboard", "app"))
+	app.Get("/profile", createViewWithLayoutHandler("profile", "app"))
 
 	// Guest routes
-	app.Get("/login", handler.RenderLogin)
-	app.Get("/forgot-password", handler.RenderForgotPassword)
-	app.Get("/register", handler.RenderRegister)
+	app.Get("/login", createViewWithLayoutHandler("auth/login", "guest"))
+	app.Get("/forgot-password", createViewWithLayoutHandler("auth/forgot-password", "guest"))
+	app.Get("/register", createViewWithLayoutHandler("auth/register", "guest"))
 }
 
 func registerHtmxRoutes(app *fiber.App) {
@@ -39,4 +41,13 @@ func registerRedirectRoutes(app *fiber.App) {
 
 		return c.Redirect("/dashboard")
 	})
+}
+
+func createViewWithLayoutHandler(view string, layout string) func(*fiber.Ctx) error {
+	view = fmt.Sprintf("views/%s", view)
+	layout = fmt.Sprintf("views/layouts/%s", layout)
+
+	return func(c *fiber.Ctx) error {
+		return c.Render(view, fiber.Map{}, layout)
+	}
 }
