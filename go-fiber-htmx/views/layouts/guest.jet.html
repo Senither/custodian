@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custodian</title>
+    <title>{{ ApplicationName }}</title>
     <link rel="stylesheet" href="/public/style.css">
     <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js"
@@ -15,8 +15,8 @@
 <body>
     <header class="top-0 fixed flex justify-between items-center px-6 py-4 w-full">
         <div>
-            <h1 class="font-extrabold text-4xl text-primary">Custodian</h1>
-            <p class="-mt-1.5 ml-6 font-semibold text-lg text-secondary">Go + Fiber + HTMX</p>
+            <h1 class="font-extrabold text-4xl text-primary">{{ ApplicationName }}</h1>
+            <p class="-mt-1.5 ml-6 font-semibold text-lg text-secondary">{{ ApplicationDescriptor }}</p>
         </div>
 
         {{ include "theme-switcher" }}

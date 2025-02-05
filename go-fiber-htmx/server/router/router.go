@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/server/handler"
 )
 
@@ -47,7 +48,12 @@ func createViewWithLayoutHandler(view string, layout string) func(*fiber.Ctx) er
 	view = fmt.Sprintf("views/%s", view)
 	layout = fmt.Sprintf("views/layouts/%s", layout)
 
+	binds := fiber.Map{
+		"ApplicationName":       config.GetString("APP_NAME"),
+		"ApplicationDescriptor": config.GetString("APP_DESCRIPTOR"),
+	}
+
 	return func(c *fiber.Ctx) error {
-		return c.Render(view, fiber.Map{}, layout)
+		return c.Render(view, binds, layout)
 	}
 }
