@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.htmx-indicator {
+    @apply opacity-0
+}
+
+.htmx-request .htmx-indicator, .htmx-request.htmx-indicator {
+    @apply opacity-60
+}
+
+.animated-background {
+    background-size: 400% 400%;
+    background-position: center top;
+    animation: animation 1.5s ease infinite;
+}
+
+@keyframes animation {
+    0%,
+    100% {
+        background-position: 200% 200%;
+        background-position: left center;
+    }
+
+    50% {
+        background-position: 200% 200%;
+        background-position: right center;
+    }
+}

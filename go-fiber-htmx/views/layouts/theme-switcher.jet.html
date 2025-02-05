@@ -36,3 +36,11 @@
     <option value="sunset">Sunset</option>
     <option value="synthwave">Synthwave</option>
 </select>
+
+<script>
+    document.body.addEventListener('htmx:afterSwap', () => {
+        if (typeof themeChange == 'function') {
+            themeChange(false)
+        }
+    })
+</script>
