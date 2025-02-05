@@ -8,12 +8,17 @@ import (
 
 type EnvironmentConfig struct {
 	Application ApplicationConfig
+	Database    DatabaseConfig
 }
 
 type ApplicationConfig struct {
 	Name       string
 	Descriptor string
 	Address    string
+}
+
+type DatabaseConfig struct {
+	Url string
 }
 
 var config EnvironmentConfig
@@ -30,6 +35,9 @@ func LoadConfig() error {
 			Name:       os.Getenv("APP_NAME"),
 			Descriptor: os.Getenv("APP_DESCRIPTOR"),
 			Address:    os.Getenv("APP_ADDR"),
+		},
+		Database: DatabaseConfig{
+			Url: os.Getenv("DATABASE_URL"),
 		},
 	}
 

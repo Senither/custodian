@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/glebarez/sqlite"
+	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/database/model"
 	"gorm.io/gorm"
 )
@@ -11,7 +12,7 @@ import (
 var connection *gorm.DB
 
 func InitiateDatabaseConnection() error {
-	con, err := gorm.Open(sqlite.Open("database.sqlite"), &gorm.Config{})
+	con, err := gorm.Open(sqlite.Open(config.Get().Database.Url), &gorm.Config{})
 	if err != nil {
 		return err
 	}
