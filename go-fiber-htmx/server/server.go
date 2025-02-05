@@ -29,19 +29,19 @@ func NewServer(cfg ServerConfig) *fiber.App {
 		return c.
 			Status(fiber.StatusNotFound).
 			Render("views/errors/404", fiber.Map{
-				"ApplicationName":       config.GetString("APP_NAME"),
-				"ApplicationDescriptor": config.GetString("APP_DESCRIPTOR"),
+				"ApplicationName":       config.Get().Application.Name,
+				"ApplicationDescriptor": config.Get().Application.Descriptor,
 			}, "views/layouts/guest")
 	})
 
 	return app
 }
 
-func createNewFiberApp(config ServerConfig) *fiber.App {
-	engine := jet.NewFileSystem(http.FS(config.ViewFilesystem), ".jet.html")
+func createNewFiberApp(cfg ServerConfig) *fiber.App {
+	engine := jet.NewFileSystem(http.FS(cfg.ViewFilesystem), ".jet.html")
 
 	return fiber.New(fiber.Config{
-		AppName:      "Custodian",
+		AppName:      config.Get().Application.Name,
 		ServerHeader: "Custodian Web Server",
 		Views:        engine,
 	})

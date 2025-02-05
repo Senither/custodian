@@ -49,8 +49,8 @@ func createViewWithLayoutHandler(view string, layout string) func(*fiber.Ctx) er
 	layout = fmt.Sprintf("views/layouts/%s", layout)
 
 	binds := fiber.Map{
-		"ApplicationName":       config.GetString("APP_NAME"),
-		"ApplicationDescriptor": config.GetString("APP_DESCRIPTOR"),
+		"ApplicationName":       config.Get().Application.Name,
+		"ApplicationDescriptor": config.Get().Application.Descriptor,
 	}
 
 	return func(c *fiber.Ctx) error {
