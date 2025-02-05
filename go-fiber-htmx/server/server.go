@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/jet/v2"
 	"github.com/senither/custodian/config"
+	"github.com/senither/custodian/server/handler"
 	"github.com/senither/custodian/server/router"
 )
 
@@ -44,5 +45,6 @@ func createNewFiberApp(cfg ServerConfig) *fiber.App {
 		AppName:      config.Get().Application.Name,
 		ServerHeader: "Custodian Web Server",
 		Views:        engine,
+		ErrorHandler: handler.HandleInternalError,
 	})
 }

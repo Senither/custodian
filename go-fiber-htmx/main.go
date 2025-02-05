@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"log/slog"
 
 	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/database"
@@ -18,6 +19,10 @@ func main() {
 	cfgErr := config.LoadConfig()
 	if cfgErr != nil {
 		panic(cfgErr)
+	}
+
+	if config.Get().Application.Debug {
+		slog.Info("Starting application with debug mode enabled")
 	}
 
 	dbErr := database.InitiateDatabaseConnection()

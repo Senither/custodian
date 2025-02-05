@@ -15,6 +15,7 @@ type ApplicationConfig struct {
 	Name       string
 	Descriptor string
 	Address    string
+	Debug      bool
 }
 
 type DatabaseConfig struct {
@@ -35,6 +36,7 @@ func LoadConfig() error {
 			Name:       os.Getenv("APP_NAME"),
 			Descriptor: os.Getenv("APP_DESCRIPTOR"),
 			Address:    os.Getenv("APP_ADDR"),
+			Debug:      os.Getenv("APP_DEBUG") == "true",
 		},
 		Database: DatabaseConfig{
 			Url: os.Getenv("DATABASE_URL"),
