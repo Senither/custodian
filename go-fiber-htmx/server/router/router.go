@@ -23,6 +23,7 @@ func registerViewRoutes(app *fiber.App) {
 	// Guest routes
 	app.Get("/login", createViewWithLayoutHandler("auth/login", "guest"))
 	app.Post("/login", handler.Login)
+	app.Get("/logout", handler.Logout)
 
 	app.Get("/register", createViewWithLayoutHandler("auth/register", "guest"))
 	app.Post("/register", handler.Register)

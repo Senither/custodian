@@ -49,6 +49,19 @@ func Login(c *fiber.Ctx) error {
 	return c.SendString("Login successful")
 }
 
+func Logout(c *fiber.Ctx) error {
+	c.Append("HX-Redirect", "/login")
+
+	ses, err := session.GetSessionFromContext(c)
+	if err != nil {
+		return nil
+	}
+
+	ses.Destroy()
+
+	return c.SendString("Logout successful")
+}
+
 type RegisterRequest struct {
 	Name            string `validate:"required,min=3,max=80"`
 	Email           string `validate:"required,email"`
