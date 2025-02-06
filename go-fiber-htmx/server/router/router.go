@@ -4,14 +4,11 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/server/handler"
 )
 
 func RegisterRoutes(app *fiber.App) {
-	app.Use(logger.New())
-
 	registerViewRoutes(app)
 	registerHtmxRoutes(app)
 	registerRedirectRoutes(app)

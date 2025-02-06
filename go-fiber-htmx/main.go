@@ -30,7 +30,7 @@ func main() {
 		panic(dbErr)
 	}
 
-	app := server.NewServer(server.ServerConfig{
+	app := server.NewServer(config.ServerConfig{
 		ViewFilesystem:   views,
 		PublicFilesystem: public,
 	})
