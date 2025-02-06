@@ -43,10 +43,7 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	ses, sesErr := session.GetSessionFromContext(c)
-	if sesErr == nil {
-		ses.Set("UID", user.ID)
-	}
+	session.SetAuthenticatedUser(c, user)
 
 	c.Append("HX-Redirect", "/dashboard")
 	return c.SendString("Login successful")
@@ -104,9 +101,7 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	user, _ := repository.FindUserByEmail(c.UserContext(), registerRequest.Email)
-	ses, _ := session.GetSessionFromContext(c)
-
-	ses.Set("UID", user.ID)
+	session.SetAuthenticatedUser(c, user)
 
 	c.Append("HX-Redirect", "/dashboard")
 	return c.SendString("Registration successful")

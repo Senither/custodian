@@ -26,6 +26,18 @@ func CreateUserWithoutPasswordEncryption(ctx context.Context, user model.User) e
 		Error
 }
 
+func FindUserByID(ctx context.Context, id uint) (model.User, error) {
+	var user model.User
+
+	result := database.
+		GetConnectionWithContext(ctx).
+		Model(model.User{}).
+		Where("id = ?", id).
+		First(&user)
+
+	return user, result.Error
+}
+
 func FindUserByEmail(ctx context.Context, email string) (model.User, error) {
 	var user model.User
 
