@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/server/handler"
+	"github.com/senither/custodian/server/session"
 )
 
 func RegisterRoutes(app *fiber.App) {
@@ -38,9 +39,10 @@ func registerHtmxRoutes(app *fiber.App) {
 
 func registerRedirectRoutes(app *fiber.App) {
 	app.Get("/", func(c *fiber.Ctx) error {
-		// Redirect the user to the dashboard if they are already logged in
-		// otherwise redirect them to the login page.
-		// return c.Redirect("/login")
+		_, err := session.GetAuthenticatedUser(c)
+		if err != nil {
+			return c.Redirect("/login")
+		}
 
 		return c.Redirect("/dashboard")
 	})
