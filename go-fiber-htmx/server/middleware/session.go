@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"math/rand"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	fiberSession "github.com/gofiber/fiber/v2/middleware/session"
@@ -12,10 +13,15 @@ func handleSessions(c *fiber.Ctx) error {
 	ses, err := session.LoadSessionFromContext(c)
 
 	if err != nil {
-		c.Locals("session", err)
-	} else {
-		c.Locals("session", ses)
+		if strings.Contains(err.Error(), "failed to decode session data") {
+			c.ClearCookie("custodian_session")
+			return c.Next()
+		}
+
+		return err
 	}
+
+	c.Locals("session", ses)
 
 	originalValues := getSessionDataAsMap(ses)
 	defer saveSessionOnChanges(ses, originalValues)
