@@ -19,26 +19,26 @@ type LoginRequest struct {
 }
 
 func Login(c *fiber.Ctx) error {
-	loginRequest := LoginRequest{
+	request := LoginRequest{
 		Email:    c.FormValue("email"),
 		Password: c.FormValue("password"),
 		Remember: c.FormValue("remember") == "on",
 	}
 
-	if err := validator.Parse(c.UserContext(), loginRequest); err != nil {
+	if err := validator.Parse(c.UserContext(), request); err != nil {
 		return c.Render("views/auth/login", fiber.Map{
 			"errors": err,
 		})
 	}
 
-	user, err := repository.FindUserByEmail(c.UserContext(), loginRequest.Email)
+	user, err := repository.FindUserByEmail(c.UserContext(), request.Email)
 	if err != nil {
 		return c.Render("views/auth/login", fiber.Map{
 			"errorMessage": "Invalid email or password",
 		})
 	}
 
-	if !security.VerifyPassword(user.Password, loginRequest.Password) {
+	if !security.VerifyPassword(user.Password, request.Password) {
 		return c.Render("views/auth/login", fiber.Map{
 			"errorMessage": "Invalid email or password",
 		})
@@ -68,20 +68,20 @@ type RegisterRequest struct {
 }
 
 func Register(c *fiber.Ctx) error {
-	registerRequest := RegisterRequest{
+	request := RegisterRequest{
 		Name:            c.FormValue("name"),
 		Email:           c.FormValue("email"),
 		Password:        c.FormValue("password"),
 		PasswordConfirm: c.FormValue("password_confirm"),
 	}
 
-	if err := validator.Parse(c.UserContext(), registerRequest); err != nil {
+	if err := validator.Parse(c.UserContext(), request); err != nil {
 		return c.Render("views/auth/register", fiber.Map{
 			"errors": err,
 		})
 	}
 
-	if registerRequest.Password != registerRequest.PasswordConfirm {
+	if request.Password != request.PasswordConfirm {
 		return c.Render("views/auth/register", fiber.Map{
 			"errors": fiber.Map{
 				"password": []string{"Passwords do not match"},
@@ -89,7 +89,7 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-	if repository.UserExistsByEmail(c.UserContext(), registerRequest.Email) {
+	if repository.UserExistsByEmail(c.UserContext(), request.Email) {
 		return c.Render("views/auth/register", fiber.Map{
 			"errors": fiber.Map{
 				"email": []string{"Email is already in use"},
@@ -99,10 +99,10 @@ func Register(c *fiber.Ctx) error {
 
 	currentTime := time.Now()
 	createErr := repository.CreateUser(c.UserContext(), model.User{
-		Name:            registerRequest.Name,
-		Email:           registerRequest.Email,
+		Name:            request.Name,
+		Email:           request.Email,
 		EmailVerifiedAt: &currentTime,
-		Password:        registerRequest.Password,
+		Password:        request.Password,
 	})
 
 	if createErr != nil {
@@ -111,14 +111,41 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-	user, _ := repository.FindUserByEmail(c.UserContext(), registerRequest.Email)
+	user, _ := repository.FindUserByEmail(c.UserContext(), request.Email)
 	session.SetAuthenticatedUser(c, user)
 
 	return utils.RedirectWithHtmx(c, "/dashboard")
 }
 
+type ForgotPasswordRequest struct {
+	Email string `validate:"required,email"`
+}
+
 func ForgotPassword(c *fiber.Ctx) error {
-	return c.JSON(fiber.Map{
-		"page": "Forgot Password",
+	request := ForgotPasswordRequest{
+		Email: c.FormValue("email"),
+	}
+
+	if err := validator.Parse(c.UserContext(), request); err != nil {
+		return c.Render("views/auth/forgot-password", fiber.Map{
+			"errors": err,
+		})
+	}
+
+	if !repository.UserExistsByEmail(c.UserContext(), request.Email) {
+		return c.Render("views/auth/forgot-password", fiber.Map{
+			"errors": fiber.Map{
+				"email": []string{"No user with that email exists"},
+			},
+		})
+	}
+
+	// Here is where we'd send the email to the user with the password reset link,
+	// this could be done with any email service that allows sending emails
+	// via a HTTP API (such as Resend, SendGrid, Mailgun, etc).
+	// However, for this example we will just return a success message.
+
+	return c.Render("views/auth/forgot-password", fiber.Map{
+		"actionMessage": "A password reset link has been sent to your email",
 	})
 }
