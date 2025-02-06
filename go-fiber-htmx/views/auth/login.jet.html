@@ -1,24 +1,51 @@
-<div class="flex bg-base-100 shadow-2xl w-96 card">
-    <form class="card-body">
+{{block inputErrorFor(key="value")}}
+{{if isset(errors) && isset(errors[key])}}
+<div class="mt-2">
+    <ul class="text-error text-sm">
+        {{range _, error := errors[key]}}
+        <li>{{error}}</li>
+        {{end}}
+    </ul>
+</div>
+{{end}}
+{{end}}
+
+<div id="login-form" class="flex bg-base-100 shadow-2xl w-96 card">
+    <form class="card-body" hx-post="/login" hx-swap="outerHTML" hx-target="#login-form">
         <h3 class="font-semibold text-lg">Sign in to Custodian</h3>
+
+        {{if isset(actionMessage)}}
+        <div class="text-info">
+            {{actionMessage}}
+        </div>
+        {{end}}
+
+        {{if isset(errorMessage)}}
+        <div class="text-error">
+            {{errorMessage}}
+        </div>
+        {{end}}
 
         <div class="form-control mt-4">
             <label class="label">
                 <span class="label-text">Email</span>
             </label>
-            <input type="email" placeholder="email@company.com" class="input-bordered input" autofocus required />
+            <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" autofocus
+                required />
+            {{yield inputErrorFor(key="email")}}
         </div>
 
         <div class="form-control mt-4">
             <label class="label">
                 <span class="label-text">Password</span>
             </label>
-            <input type="password" placeholder="********" class="input-bordered input" required />
+            <input type="password" name="password" placeholder="********" class="input-bordered input" required />
+            {{yield inputErrorFor(key="password")}}
         </div>
 
         <div class="flex justify-between gap-4">
             <label class="flex gap-2 cursor-pointer label">
-                <input type="checkbox" class="checkbox checkbox-primary" />
+                <input type="checkbox" name="remember" class="checkbox checkbox-primary" />
                 <span class="label-text">Remember me</span>
             </label>
 
