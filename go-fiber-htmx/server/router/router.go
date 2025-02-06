@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/senither/custodian/config"
 	"github.com/senither/custodian/server/handler"
+	"github.com/senither/custodian/server/middleware"
 	"github.com/senither/custodian/server/session"
 )
 
@@ -17,19 +18,19 @@ func RegisterRoutes(app *fiber.App) {
 
 func registerViewRoutes(app *fiber.App) {
 	// Authenticated routes
-	app.Get("/dashboard", createViewWithLayoutHandler("dashboard", "app"))
-	app.Get("/profile", createViewWithLayoutHandler("profile", "app"))
+	app.Get("/dashboard", middleware.Authenticated(), createViewWithLayoutHandler("dashboard", "app")).Name("dashboard")
+	app.Get("/profile", middleware.Authenticated(), createViewWithLayoutHandler("profile", "app")).Name("profile")
+	app.Get("/logout", middleware.Authenticated(), handler.Logout).Name("logout")
 
 	// Guest routes
-	app.Get("/login", createViewWithLayoutHandler("auth/login", "guest"))
-	app.Post("/login", handler.Login)
-	app.Get("/logout", handler.Logout)
+	app.Get("/login", middleware.Guest(), createViewWithLayoutHandler("auth/login", "guest")).Name("login")
+	app.Post("/login", middleware.Guest(), handler.Login)
 
-	app.Get("/register", createViewWithLayoutHandler("auth/register", "guest"))
-	app.Post("/register", handler.Register)
+	app.Get("/register", middleware.Guest(), createViewWithLayoutHandler("auth/register", "guest")).Name("register")
+	app.Post("/register", middleware.Guest(), handler.Register)
 
-	app.Get("/forgot-password", createViewWithLayoutHandler("auth/forgot-password", "guest"))
-	app.Post("/forgot-password", handler.ForgotPassword)
+	app.Get("/forgot-password", middleware.Guest(), createViewWithLayoutHandler("auth/forgot-password", "guest")).Name("forgot-password")
+	app.Post("/forgot-password", middleware.Guest(), handler.ForgotPassword)
 }
 
 func registerHtmxRoutes(app *fiber.App) {

@@ -9,6 +9,7 @@ import (
 	"github.com/senither/custodian/database"
 	"github.com/senither/custodian/database/model"
 	"github.com/senither/custodian/database/repository"
+	"github.com/senither/custodian/server/utils"
 )
 
 var store *session.Store
@@ -59,8 +60,18 @@ func SetAuthenticatedUser(ctx *fiber.Ctx, user model.User) error {
 }
 
 // Gets the authenticated user from the session store using the session ID stored in the cookie from the provided context.
-// This function returns an error if the user is not found in the session store, or if the user ID stored in the session is not a valid user ID.
 func GetAuthenticatedUser(ctx *fiber.Ctx) (*model.User, error) {
+	user, err := GetAuthenticatedUserWithoutRedirects(ctx)
+	if err != nil {
+		return nil, utils.RedirectWithHtmx(ctx, "/login")
+	}
+
+	return user, nil
+}
+
+// Gets the authenticated user from the session store using the session ID stored in the cookie from the provided context.
+// This function does not redirect the user to the login page if the user is not authenticated, and instead returns the error directly.
+func GetAuthenticatedUserWithoutRedirects(ctx *fiber.Ctx) (*model.User, error) {
 	value := ctx.Locals("user")
 
 	localUser, ok := value.(*model.User)
@@ -70,20 +81,17 @@ func GetAuthenticatedUser(ctx *fiber.Ctx) (*model.User, error) {
 
 	session, err := GetSessionFromContext(ctx)
 	if err != nil {
-		ctx.Append("HX-Redirect", "/login")
-		return nil, err
+		return nil, fiber.ErrInternalServerError
 	}
 
 	uid, ok := session.Get("_internal.UID").(uint)
 	if !ok {
-		ctx.Append("HX-Redirect", "/login")
-		return nil, fiber.ErrUnauthorized
+		return nil, fiber.ErrInternalServerError
 	}
 
 	dbUser, err := repository.FindUserByID(ctx.UserContext(), uid)
 	if err != nil {
-		ctx.Append("HX-Redirect", "/login")
-		return nil, fiber.ErrUnauthorized
+		return nil, fiber.ErrInternalServerError
 	}
 
 	ctx.Locals("user", dbUser)

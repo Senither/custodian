@@ -18,14 +18,15 @@ func Wrap(wrapHandler func(*fiber.App), app *fiber.App, cfg config.ServerConfig)
 }
 
 func RegisterBeforeMiddleware(app *fiber.App, cfg config.ServerConfig) {
+	app.Use("/public", filesystem.New(filesystem.Config{
+		Root:       http.FS(cfg.PublicFilesystem),
+		PathPrefix: "/public",
+	}))
+
 	app.Use(logger.New())
 	app.Use(handleSessions)
 }
 
 func RegisterAfterMiddleware(app *fiber.App, cfg config.ServerConfig) {
-	app.Use("", filesystem.New(filesystem.Config{
-		Root: http.FS(cfg.PublicFilesystem),
-	}))
-
 	app.Use(handlePageNotFound)
 }

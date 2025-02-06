@@ -8,6 +8,7 @@ import (
 	"github.com/senither/custodian/database/repository"
 	"github.com/senither/custodian/server/security"
 	"github.com/senither/custodian/server/session"
+	"github.com/senither/custodian/server/utils"
 	"github.com/senither/custodian/server/validator"
 )
 
@@ -45,21 +46,18 @@ func Login(c *fiber.Ctx) error {
 
 	session.SetAuthenticatedUser(c, user)
 
-	c.Append("HX-Redirect", "/dashboard")
-	return c.SendString("Login successful")
+	return utils.RedirectWithHtmx(c, "/dashboard")
 }
 
 func Logout(c *fiber.Ctx) error {
-	c.Append("HX-Redirect", "/login")
-
 	ses, err := session.GetSessionFromContext(c)
 	if err != nil {
-		return nil
+		return utils.RedirectWithHtmx(c, "/login")
 	}
 
 	ses.Destroy()
 
-	return c.SendString("Logout successful")
+	return utils.RedirectWithHtmx(c, "/login")
 }
 
 type RegisterRequest struct {
@@ -116,8 +114,7 @@ func Register(c *fiber.Ctx) error {
 	user, _ := repository.FindUserByEmail(c.UserContext(), registerRequest.Email)
 	session.SetAuthenticatedUser(c, user)
 
-	c.Append("HX-Redirect", "/dashboard")
-	return c.SendString("Registration successful")
+	return utils.RedirectWithHtmx(c, "/dashboard")
 }
 
 func ForgotPassword(c *fiber.Ctx) error {
