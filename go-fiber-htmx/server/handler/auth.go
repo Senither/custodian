@@ -34,13 +34,13 @@ func Login(c *fiber.Ctx) error {
 	user, err := repository.FindUserByEmail(c.UserContext(), loginRequest.Email)
 	if err != nil {
 		return c.Render("views/auth/login", fiber.Map{
-			"errorMessage": "Invalid email or password (1)",
+			"errorMessage": "Invalid email or password",
 		})
 	}
 
 	if !security.VerifyPassword(user.Password, loginRequest.Password) {
 		return c.Render("views/auth/login", fiber.Map{
-			"errorMessage": "Invalid email or password (2)",
+			"errorMessage": "Invalid email or password",
 		})
 	}
 

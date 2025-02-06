@@ -11,49 +11,51 @@
 {{end}}
 
 <div id="register-form" class="flex bg-base-100 shadow-2xl w-96 card">
-    <form class="card-body" hx-post="/register" hx-swap="outerHTML" hx-target="#register-form">
-        <h3 class="font-semibold text-lg">Sign up for Custodian</h3>
+    <div class="card-body">
+        <form hx-post="/register" hx-swap="outerHTML" hx-target="#register-form">
+            <h3 class="font-semibold text-lg">Sign up for Custodian</h3>
 
-        <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Your name</span>
-            </label>
-            <input type="text" name="name" placeholder="Eg. John Doe" class="input-bordered input" autofocus
-                required />
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Your name</span>
+                </label>
+                <input type="text" name="name" placeholder="Eg. John Doe" class="input-bordered input" autofocus
+                    required />
                 {{yield inputErrorFor(key="name")}}
-        </div>
+            </div>
 
-        <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Your email</span>
-            </label>
-            <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" />
-            {{yield inputErrorFor(key="email")}}
-        </div>
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Your email</span>
+                </label>
+                <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" />
+                {{yield inputErrorFor(key="email")}}
+            </div>
 
-        <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Your password</span>
-            </label>
-            <input type="password" name="password" placeholder="********" class="input-bordered input" required />
-            {{yield inputErrorFor(key="password")}}
-        </div>
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Your password</span>
+                </label>
+                <input type="password" name="password" placeholder="********" class="input-bordered input" required />
+                {{yield inputErrorFor(key="password")}}
+            </div>
 
-        <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Confirm password</span>
-            </label>
-            <input type="password" name="password_confirm" placeholder="********" class="input-bordered input"
-                required />
-        </div>
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Confirm password</span>
+                </label>
+                <input type="password" name="password_confirm" placeholder="********" class="input-bordered input"
+                    required />
+            </div>
 
-        <div class="form-control mt-6">
-            <button type="submit" class="btn btn-primary">Create account</button>
-        </div>
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-primary">Create account</button>
+            </div>
+        </form>
 
         <p class="text-base-content text-sm">
             Already have an account?
             <a href="/login" class="link link-hover link-primary">Login here</a>
         </p>
-    </form>
+    </div>
 </div>
