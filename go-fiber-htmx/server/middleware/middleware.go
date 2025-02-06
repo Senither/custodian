@@ -19,6 +19,7 @@ func Wrap(wrapHandler func(*fiber.App), app *fiber.App, cfg config.ServerConfig)
 
 func RegisterBeforeMiddleware(app *fiber.App, cfg config.ServerConfig) {
 	app.Use(logger.New())
+	app.Use(handleSessions)
 }
 
 func RegisterAfterMiddleware(app *fiber.App, cfg config.ServerConfig) {

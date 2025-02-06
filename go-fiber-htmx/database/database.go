@@ -18,6 +18,7 @@ func InitiateDatabaseConnection() error {
 	}
 
 	con.AutoMigrate(
+		&model.Session{},
 		&model.User{},
 	)
 
@@ -27,5 +28,11 @@ func InitiateDatabaseConnection() error {
 }
 
 func GetConnectionWithContext(ctx context.Context) *gorm.DB {
-	return connection.WithContext(ctx)
+	db := connection.WithContext(ctx)
+
+	if config.Get().Application.Debug {
+		return db.Debug()
+	}
+
+	return db
 }

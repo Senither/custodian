@@ -9,9 +9,12 @@ import (
 	"github.com/senither/custodian/server/handler"
 	"github.com/senither/custodian/server/middleware"
 	"github.com/senither/custodian/server/router"
+	"github.com/senither/custodian/server/session"
 )
 
 func NewServer(cfg config.ServerConfig) *fiber.App {
+	session.InitiateSessionStorage()
+
 	app := createNewFiberApp(cfg)
 
 	middleware.Wrap(func(app *fiber.App) {
