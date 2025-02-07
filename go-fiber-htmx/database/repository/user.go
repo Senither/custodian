@@ -20,10 +20,18 @@ func CreateUser(ctx context.Context, user model.User) error {
 }
 
 func CreateUserWithoutPasswordEncryption(ctx context.Context, user model.User) error {
-	return database.
+	result := database.
 		GetConnectionWithContext(ctx).
-		Create(&user).
-		Error
+		Create(&user)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	go CreateDefaultPrioritiesForUserId(ctx, user.ID)
+	go CreateDefaultCategoriesForUserId(ctx, user.ID)
+
+	return nil
 }
 
 func FindUserByID(ctx context.Context, id uint) (model.User, error) {
@@ -34,7 +42,6 @@ func FindUserByID(ctx context.Context, id uint) (model.User, error) {
 		Model(model.User{}).
 		Where("id = ?", id).
 		First(&user)
-
 	return user, result.Error
 }
 

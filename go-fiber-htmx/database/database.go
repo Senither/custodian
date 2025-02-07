@@ -20,6 +20,9 @@ func InitiateDatabaseConnection() error {
 	con.AutoMigrate(
 		&model.Session{},
 		&model.User{},
+		&model.Priority{},
+		&model.Category{},
+		&model.Task{},
 	)
 
 	connection = con
