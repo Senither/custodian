@@ -5,7 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
-	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/senither/custodian/config"
 )
 
@@ -23,7 +23,10 @@ func RegisterBeforeMiddleware(app *fiber.App, cfg config.ServerConfig) {
 		PathPrefix: "/public",
 	}))
 
-	app.Use(logger.New())
+	app.Use(newFiberLogger())
+	app.Use(recover.New(recover.Config{
+		EnableStackTrace: config.Get().Application.Debug,
+	}))
 	app.Use(handleSessions)
 }
 
