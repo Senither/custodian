@@ -60,9 +60,15 @@ func createViewWithLayoutHandler(view string, layout string) func(*fiber.Ctx) er
 	binds := fiber.Map{
 		"ApplicationName":       config.Get().Application.Name,
 		"ApplicationDescriptor": config.Get().Application.Descriptor,
+		"AuthenticatedUser":     fiber.Map{},
 	}
 
 	return func(c *fiber.Ctx) error {
+		user, _ := session.GetAuthenticatedUserWithoutRedirects(c)
+		if user != nil {
+			binds["AuthenticatedUser"] = user
+		}
+
 		return c.Render(view, binds, layout)
 	}
 }
