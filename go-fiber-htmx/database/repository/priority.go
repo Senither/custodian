@@ -21,3 +21,18 @@ func CreateDefaultPrioritiesForUserId(ctx context.Context, userId uint) error {
 
 	return result.Error
 }
+
+func GetPrioritiesForUser(ctx context.Context, user *model.User) ([]model.Priority, error) {
+	return GetPrioritiesForUserId(ctx, user.ID)
+}
+
+func GetPrioritiesForUserId(ctx context.Context, userId uint) ([]model.Priority, error) {
+	var priorities []model.Priority
+
+	result := database.
+		GetConnectionWithContext(ctx).
+		Where("user_id = ?", userId).
+		Find(&priorities)
+
+	return priorities, result.Error
+}

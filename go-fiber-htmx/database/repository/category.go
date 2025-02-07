@@ -21,3 +21,18 @@ func CreateDefaultCategoriesForUserId(ctx context.Context, userId uint) error {
 
 	return result.Error
 }
+
+func GetCategoriesForUser(ctx context.Context, user *model.User) ([]model.Category, error) {
+	return GetCategoriesForUserId(ctx, user.ID)
+}
+
+func GetCategoriesForUserId(ctx context.Context, userId uint) ([]model.Category, error) {
+	var categories []model.Category
+
+	result := database.
+		GetConnectionWithContext(ctx).
+		Where("user_id = ?", userId).
+		Find(&categories)
+
+	return categories, result.Error
+}

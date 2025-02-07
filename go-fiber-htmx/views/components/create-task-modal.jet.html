@@ -9,7 +9,7 @@
             </svg>
             <h3 class="font-bold text-lg">Creating new Task</h3>
         </div>
-        <div class="flex flex-col gap-4 px-6">
+        <form class="flex flex-col gap-4 px-6">
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text">What is the task?</span>
@@ -24,10 +24,9 @@
                     </div>
                     <select class="select-bordered select">
                         <option disabled selected>Pick one</option>
-                        <option>House Stuff</option>
-                        <option>Work</option>
-                        <option>Learning</option>
-                        <option>Meeting</option>
+                        {{range _, category := categories}}
+                        <option value="{{category.ID}}">{{category.Name}}</option>
+                        {{end}}
                     </select>
                 </label>
 
@@ -37,14 +36,13 @@
                     </div>
                     <select class="select-bordered select">
                         <option disabled selected>Pick one</option>
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
-                        <option>Highest</option>
+                        {{range _, priority := priorities}}
+                        <option value="{{priority.ID}}">{{priority.Name}}</option>
+                        {{end}}
                     </select>
                 </label>
             </div>
-        </div>
+        </form>
         <div class="modal-backdrop">
             <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
                 <button class="text-primary-content btn btn-primary">Create Task</button>
