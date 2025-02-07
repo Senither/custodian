@@ -51,13 +51,14 @@ func FindUserByEmail(ctx context.Context, email string) (model.User, error) {
 }
 
 func UserExistsByEmail(ctx context.Context, email string) bool {
-	var user model.User
+	var exists bool
 
-	result := database.
+	database.
 		GetConnectionWithContext(ctx).
 		Model(model.User{}).
+		Select("count(*) > 0").
 		Where("email = ?", email).
-		First(&user)
+		Find(&exists)
 
-	return result.RowsAffected == 1
+	return exists
 }
