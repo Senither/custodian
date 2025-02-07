@@ -19,3 +19,19 @@ func RenderTasksComponent(c *fiber.Ctx) error {
 		"user": user,
 	})
 }
+
+func RenderCreateTaskModalComponent(c *fiber.Ctx) error {
+	return c.Render("views/components/create-task-modal", nil)
+}
+
+func RenderEditTaskModalComponent(c *fiber.Ctx) error {
+	return c.Render("views/components/edit-task-modal", fiber.Map{
+		"task": c.Params("task"),
+	})
+}
+
+func RenderDeleteTaskModalComponent(c *fiber.Ctx) error {
+	return c.Render("views/components/delete-task-modal", fiber.Map{
+		"task": c.Params("task"),
+	})
+}

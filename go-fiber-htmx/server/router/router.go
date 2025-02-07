@@ -37,6 +37,9 @@ func registerHtmxRoutes(app *fiber.App) {
 	hx := app.Group("/hx")
 
 	hx.Get("/tasks", handler.RenderTasksComponent)
+	hx.Get("/create-task-modal", handler.RenderCreateTaskModalComponent)
+	hx.Get("/edit-task-modal/:task", handler.RenderEditTaskModalComponent)
+	hx.Get("/delete-task-modal/:task", handler.RenderDeleteTaskModalComponent)
 }
 
 func registerRedirectRoutes(app *fiber.App) {

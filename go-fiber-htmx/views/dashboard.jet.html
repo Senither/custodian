@@ -1,1 +1,9 @@
-<div hx-trigger="load" hx-get="/hx/tasks"></div>
+<div class="flex justify-between px-6 md:px-0">
+    <button hx-get="/hx/create-task-modal" hx-target="#modal" hx-swap="innerHTML" class="btn btn-primary">
+        Add Task
+    </button>
+
+    {{include "partials/filter-tasks"}}
+</div>
+
+<div id="tasks" hx-trigger="load, refresh" hx-get="/hx/tasks"></div>
