@@ -42,6 +42,7 @@ func FindUserByID(ctx context.Context, id uint) (model.User, error) {
 		Model(model.User{}).
 		Where("id = ?", id).
 		First(&user)
+
 	return user, result.Error
 }
 

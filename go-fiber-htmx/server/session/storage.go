@@ -94,7 +94,7 @@ func GetAuthenticatedUserWithoutRedirects(ctx *fiber.Ctx) (*model.User, error) {
 		return nil, fiber.ErrInternalServerError
 	}
 
-	ctx.Locals("user", dbUser)
+	ctx.Locals("user", &dbUser)
 
 	return &dbUser, nil
 }
