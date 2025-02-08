@@ -103,7 +103,10 @@
                     retain.
                 </p>
 
-                <a class="text-error-content btn btn-error">Delete Account</a>
+                <button hx-get="/hx/delete-account-modal" hx-target="#modal" hx-swap="innerHTML"
+                    class="text-error-content btn btn-error">
+                    Delete Account
+                </button>
             </div>
         </div>
     </div>

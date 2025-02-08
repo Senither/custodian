@@ -1,0 +1,69 @@
+{{block inputErrorFor(key="value")}}
+{{if isset(errors) && isset(errors[key])}}
+<div class="mt-2">
+    <ul class="text-error text-sm">
+        {{range _, error := errors[key]}}
+        <li>{{error}}</li>
+        {{end}}
+    </ul>
+</div>
+{{end}}
+{{end}}
+
+<dialog id="delete-account-modal" class="backdrop-blur-sm backdrop-grayscale modal" open>
+    <div class="p-0 modal-box">
+        <div class="flex items-center gap-4 p-6">
+            <svg class="w-8 h-8 text-error" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z">
+                </path>
+            </svg>
+
+            <h2 class="font-medium text-lg">
+                Are you sure you want to delete your account?
+            </h2>
+        </div>
+
+        <form class="pb-6" hx-post="/hx/delete-account-modal" hx-swap="outerHTML" hx-target="#delete-account-modal">
+            <p class="mt-1 px-6 text-sm">
+                Once your account is deleted, all of its resources and data will be permanently deleted.
+                Please enter your password to confirm you would like to permanently delete your account.
+            </p>
+
+            <label class="form-control mt-6 px-6 w-full">
+                <div class="label">
+                    <span class="label-text">Password</span>
+                </div>
+                <input id="deleteAccountPassword" name="password" type="password"
+                    class="input-bordered w-full max-w-xs input" placeholder="********" />
+                {{yield inputErrorFor(key="password")}}
+            </label>
+
+            <div class="divider"></div>
+
+            <div class="gap-4 grid grid-cols-2 px-6">
+                <button type="submit" class="btn btn-error">
+                    Delete Account
+                </button>
+
+                <a class="bg-base-200 border border-base-300 btn"
+                    onclick="document.getElementById('delete-account-modal').close()">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<script>
+    document.onkeydown = (e) => {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            document.getElementById('delete-account-modal').close()
+        }
+    }
+
+    if (!document.getElementById('delete-account-modal').open) {
+        document.getElementById('delete-account-modal').showModal()
+    }
+</script>

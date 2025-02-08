@@ -70,3 +70,12 @@ func UserExistsByEmail(ctx context.Context, email string) bool {
 
 	return exists
 }
+
+func DeleteUserById(ctx context.Context, id uint) error {
+	result := database.
+		GetConnectionWithContext(ctx).
+		Unscoped().
+		Delete(&model.User{}, id)
+
+	return result.Error
+}
