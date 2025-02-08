@@ -36,3 +36,12 @@ func GetPrioritiesForUserId(ctx context.Context, userId uint) ([]model.Priority,
 
 	return priorities, result.Error
 }
+
+func DeletePrioritiesForUserId(ctx context.Context, id uint) error {
+	result := database.
+		GetConnectionWithContext(ctx).
+		Unscoped().
+		Delete(&model.Priority{}, "user_id = ?", id)
+
+	return result.Error
+}

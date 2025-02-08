@@ -36,3 +36,12 @@ func GetCategoriesForUserId(ctx context.Context, userId uint) ([]model.Category,
 
 	return categories, result.Error
 }
+
+func DeleteCategoriesForUserId(ctx context.Context, id uint) error {
+	result := database.
+		GetConnectionWithContext(ctx).
+		Unscoped().
+		Delete(&model.Category{}, "user_id = ?", id)
+
+	return result.Error
+}

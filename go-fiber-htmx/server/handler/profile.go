@@ -45,7 +45,12 @@ func DeleteAccount(c *fiber.Ctx) error {
 		})
 	}
 
-	go repository.DeleteUserById(c.UserContext(), user.ID)
+	ses, _ := session.GetSessionFromContext(c)
+	if ses != nil {
+		ses.Destroy()
+	}
+
+	go repository.DeleteUserAndRelatedRecordsById(c.UserContext(), user.ID)
 
 	utils.RedirectWithHtmx(c, "/logout")
 
