@@ -2,7 +2,6 @@ package validator
 
 import (
 	"context"
-	"log/slog"
 	"strings"
 
 	"github.com/go-playground/locales/en"
@@ -26,15 +25,6 @@ func Parse(ctx context.Context, values interface{}) *fiber.Map {
 
 	errors := make(fiber.Map)
 	for _, err := range errs.(playgroundValidator.ValidationErrors) {
-		slog.Info("validation error",
-			"field", err.Field(),
-			"tag", err.Tag(),
-			"value", err.Value(),
-			"kind", err.Kind(),
-			"type", err.Type(),
-			"param", err.Param(),
-		)
-
 		key := strings.ToLower(err.Field())
 		if _, ok := errors[key]; !ok {
 			errors[key] = []string{}
