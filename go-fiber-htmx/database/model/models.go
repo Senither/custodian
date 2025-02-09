@@ -9,7 +9,7 @@ import (
 type User struct {
 	gorm.Model
 	Name            string     `json:"name"`
-	Email           string     `json:"email", gorm:"index,unique;type:text collate nocase"`
+	Email           string     `json:"email" gorm:"index,unique;type:text collate nocase"`
 	EmailVerifiedAt *time.Time `json:"email_verified_at"`
 	Password        string     `json:"-"` // Ignored when marshaling to JSON
 	Tasks           []Task     `json:"tasks"`
