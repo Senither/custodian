@@ -7,8 +7,8 @@
                 <label class="label">
                     <span class="label-text">Your name</span>
                 </label>
-                <input type="text" name="name" placeholder="Eg. John Doe" class="input-bordered input" autofocus
-                    required />
+                <input type="text" name="name" placeholder="Eg. John Doe" class="input-bordered input"
+                    value='{{raw: getOldInputValueFor(old, "name")}}' autofocus required />
                 {{raw: getInputErrorFor(errors, "name")}}
             </div>
 
@@ -16,7 +16,8 @@
                 <label class="label">
                     <span class="label-text">Your email</span>
                 </label>
-                <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" />
+                <input type="email" name="email" placeholder="email@company.com" class="input-bordered input"
+                    value='{{raw: getOldInputValueFor(old, "email")}}' />
                 {{raw: getInputErrorFor(errors, "email")}}
             </div>
 

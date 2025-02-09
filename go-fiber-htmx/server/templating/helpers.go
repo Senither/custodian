@@ -26,3 +26,16 @@ func getInputErrorFor(errors *fiber.Map, key string) string {
 		lines,
 	)
 }
+
+func getOldInputValueFor(old *fiber.Map, key string) string {
+	if old == nil {
+		return ""
+	}
+
+	value, ok := (*old)[key].(string)
+	if !ok {
+		return ""
+	}
+
+	return value
+}

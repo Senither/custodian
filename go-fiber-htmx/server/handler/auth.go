@@ -77,13 +77,15 @@ func Register(c *fiber.Ctx) error {
 
 	if err := validator.Parse(c.UserContext(), request); err != nil {
 		return c.Render("views/auth/register", fiber.Map{
+			"old":    utils.ConvertToFiberMap(request),
 			"errors": err,
 		})
 	}
 
 	if request.Password != request.PasswordConfirm {
 		return c.Render("views/auth/register", fiber.Map{
-			"errors": fiber.Map{
+			"old": utils.ConvertToFiberMap(request),
+			"errors": &fiber.Map{
 				"password": []string{"Passwords do not match"},
 			},
 		})
@@ -91,7 +93,8 @@ func Register(c *fiber.Ctx) error {
 
 	if repository.UserExistsByEmail(c.UserContext(), request.Email) {
 		return c.Render("views/auth/register", fiber.Map{
-			"errors": fiber.Map{
+			"old": utils.ConvertToFiberMap(request),
+			"errors": &fiber.Map{
 				"email": []string{"Email is already in use"},
 			},
 		})
@@ -107,6 +110,7 @@ func Register(c *fiber.Ctx) error {
 
 	if createErr != nil {
 		return c.Render("views/auth/register", fiber.Map{
+			"old":          utils.ConvertToFiberMap(request),
 			"errorMessage": "Failed to create user",
 		})
 	}

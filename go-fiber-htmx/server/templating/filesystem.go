@@ -12,6 +12,7 @@ func NewTemplatingEngine(cfg config.ServerConfig) *jet.Engine {
 	engine := jet.NewFileSystem(http.FS(cfg.ViewFilesystem), ".jet.html")
 
 	engine.AddFunc("getInputErrorFor", getInputErrorFor)
+	engine.AddFunc("getOldInputValueFor", getOldInputValueFor)
 
 	return engine
 }
@@ -23,4 +24,5 @@ func NewTemplatingEngine(cfg config.ServerConfig) *jet.Engine {
 // so the templates can be loaded and bound to the engine.
 func RegisterTemplateDefaults(engine *jet.Engine) {
 	engine.Templates.AddGlobal("errors", &fiber.Map{})
+	engine.Templates.AddGlobal("old", &fiber.Map{})
 }
