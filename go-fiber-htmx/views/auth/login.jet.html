@@ -1,15 +1,3 @@
-{{block inputErrorFor(key="value")}}
-{{if isset(errors) && isset(errors[key])}}
-<div class="mt-2">
-    <ul class="text-error text-sm">
-        {{range _, error := errors[key]}}
-        <li>{{error}}</li>
-        {{end}}
-    </ul>
-</div>
-{{end}}
-{{end}}
-
 <div id="login-form" class="flex bg-base-100 shadow-2xl w-96 card">
     <div class="card-body">
         <form hx-post="/login" hx-swap="outerHTML" hx-target="#login-form">
@@ -33,7 +21,7 @@
                 </label>
                 <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" autofocus
                     required />
-                {{yield inputErrorFor(key="email")}}
+                {{raw: getInputErrorFor(errors, "email")}}
             </div>
 
             <div class="form-control mt-4">
@@ -41,7 +29,7 @@
                     <span class="label-text">Password</span>
                 </label>
                 <input type="password" name="password" placeholder="********" class="input-bordered input" required />
-                {{yield inputErrorFor(key="password")}}
+                {{raw: getInputErrorFor(errors, "password")}}
             </div>
 
             <div class="flex justify-between gap-4">
@@ -51,7 +39,8 @@
                 </label>
 
                 <label class="label">
-                    <a hx-target="body" hx-swap="outerHTML" href="/forgot-password" class="label-text link link-hover link-primary">
+                    <a hx-target="body" hx-swap="outerHTML" href="/forgot-password"
+                        class="label-text link link-hover link-primary">
                         Forgot password?
                     </a>
                 </label>

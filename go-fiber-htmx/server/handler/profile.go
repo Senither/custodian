@@ -31,7 +31,7 @@ func DeleteAccount(c *fiber.Ctx) error {
 	user, err := session.GetAuthenticatedUser(c)
 	if err != nil {
 		return c.Render("views/components/delete-account-modal", fiber.Map{
-			"errors": fiber.Map{
+			"errors": &fiber.Map{
 				"password": []string{"Failed when trying to validate the password"},
 			},
 		})
@@ -39,7 +39,7 @@ func DeleteAccount(c *fiber.Ctx) error {
 
 	if !security.VerifyPassword(user.Password, request.Password) {
 		return c.Render("views/components/delete-account-modal", fiber.Map{
-			"errors": fiber.Map{
+			"errors": &fiber.Map{
 				"password": []string{"The password you entered is incorrect"},
 			},
 		})

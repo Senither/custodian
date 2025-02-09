@@ -134,7 +134,7 @@ func ForgotPassword(c *fiber.Ctx) error {
 
 	if !repository.UserExistsByEmail(c.UserContext(), request.Email) {
 		return c.Render("views/auth/forgot-password", fiber.Map{
-			"errors": fiber.Map{
+			"errors": &fiber.Map{
 				"email": []string{"No user with that email exists"},
 			},
 		})
