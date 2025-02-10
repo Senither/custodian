@@ -2,13 +2,13 @@ package validator
 
 import (
 	"context"
-	"strings"
 
 	"github.com/go-playground/locales/en"
 	playgroundTranslator "github.com/go-playground/universal-translator"
 	playgroundValidator "github.com/go-playground/validator/v10"
 	englishTranslations "github.com/go-playground/validator/v10/translations/en"
 	"github.com/gofiber/fiber/v2"
+	"github.com/senither/custodian/server/utils"
 )
 
 var (
@@ -25,7 +25,7 @@ func Parse(ctx context.Context, values interface{}) *fiber.Map {
 
 	errors := make(fiber.Map)
 	for _, err := range errs.(playgroundValidator.ValidationErrors) {
-		key := strings.ToLower(err.Field())
+		key := utils.ToSnakeCase(err.Field())
 		if _, ok := errors[key]; !ok {
 			errors[key] = []string{}
 		}
