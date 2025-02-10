@@ -53,9 +53,9 @@ func UpdateProfileInformation(c *fiber.Ctx) error {
 
 	if dbErr != nil {
 		return c.Render("views/profile", fiber.Map{
-			"AuthenticatedUser": user,
-			"ActionMessage":     "Failed to save the changes",
-			"RandomId":          "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
+			"AuthenticatedUser":        user,
+			"ActionInformationMessage": "Failed to save the changes",
+			"RandomId":                 "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
 		})
 	}
 
@@ -63,9 +63,71 @@ func UpdateProfileInformation(c *fiber.Ctx) error {
 	user.Email = request.Email
 
 	return c.Render("views/profile", fiber.Map{
-		"AuthenticatedUser": user,
-		"ActionMessage":     "Saved",
-		"RandomId":          "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
+		"AuthenticatedUser":        user,
+		"ActionInformationMessage": "Saved",
+		"RandomId":                 "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
+	})
+}
+
+type UpdateProfilePasswordRequest struct {
+	CurrentPassword string `validate:"required,min=1"`
+	Password        string `validate:"required,min=8"`
+	PasswordConfirm string `validate:"required"`
+}
+
+func UpdateProfilePassword(c *fiber.Ctx) error {
+	user, err := session.GetAuthenticatedUser(c)
+	if err != nil {
+		return c.SendString("Failed to get the authenticated user")
+	}
+
+	request := UpdateProfilePasswordRequest{
+		CurrentPassword: c.FormValue("current_password"),
+		Password:        c.FormValue("password"),
+		PasswordConfirm: c.FormValue("password_confirm"),
+	}
+
+	if err := validator.Parse(c.UserContext(), request); err != nil {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"errors":            err,
+		})
+	}
+
+	if request.Password != request.PasswordConfirm {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"errors": &fiber.Map{
+				"password": []string{"Passwords do not match"},
+			},
+		})
+	}
+
+	if !security.VerifyPassword(user.Password, request.CurrentPassword) {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"errors": &fiber.Map{
+				"current_password": []string{"The current password you entered is incorrect"},
+			},
+		})
+	}
+
+	dbErr := repository.UpdateUser(c.UserContext(), *user, model.User{
+		Password: request.Password,
+	})
+
+	if dbErr != nil {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser":     user,
+			"ActionPasswordMessage": "Failed to save the changes",
+			"RandomId":              "update-password-" + strconv.FormatInt(rand.Int63(), 10),
+		})
+	}
+
+	return c.Render("views/profile", fiber.Map{
+		"AuthenticatedUser":     user,
+		"ActionPasswordMessage": "Saved",
+		"RandomId":              "update-password-" + strconv.FormatInt(rand.Int63(), 10),
 	})
 }
 

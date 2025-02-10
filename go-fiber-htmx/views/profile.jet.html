@@ -44,10 +44,10 @@
                     <div class="my-0 py-0 divider"></div>
 
                     <div class="flex justify-end items-center px-4 py-3">
-                        {{if isset(ActionMessage)}}
+                        {{if isset(ActionInformationMessage)}}
                         <div id="{{RandomId}}"
                             class="opacity-0 mr-4 text-secondary text-sm transition-opacity duration-500 ease-in-out">
-                            {{ActionMessage}}
+                            {{ActionInformationMessage}}
 
                             <script>
                                 setTimeout(() => document.getElementById('{{RandomId}}').classList.remove('opacity-0'), 10)
@@ -61,6 +61,7 @@
                             </script>
                         </div>
                         {{end}}
+
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -76,32 +77,55 @@
             </header>
 
             <div class="flex flex-col flex-1 md:col-span-3 bg-base-100 border border-base-300 sm:rounded-md">
-                <form>
+                <form hx-post="/hx/update-profile-password" hx-swap="outerHTML" hx-target="#profile">
                     <div class="flex flex-col gap-4 px-4 py-3 w-full">
                         <label class="form-control px-4 w-full">
                             <div class="label">
                                 <span class="label-text">Current password</span>
                             </div>
-                            <input type="password" class="input-bordered w-full max-w-xs input" />
+                            <input type="password" name="current_password"
+                                class="input-bordered w-full max-w-xs input" />
+                            {{raw: getInputErrorFor(errors, "current_password")}}
                         </label>
                         <label class="form-control px-4 w-full">
                             <div class="label">
                                 <span class="label-text">New password</span>
                             </div>
-                            <input type="password" class="input-bordered w-full max-w-xs input" />
+                            <input type="password" name="password" class="input-bordered w-full max-w-xs input" />
+                            {{raw: getInputErrorFor(errors, "password")}}
                         </label>
                         <label class="form-control px-4 w-full">
                             <div class="label">
                                 <span class="label-text">Confirm password</span>
                             </div>
-                            <input type="password" class="input-bordered w-full max-w-xs input" />
+                            <input type="password" name="password_confirm"
+                                class="input-bordered w-full max-w-xs input" />
+                            {{raw: getInputErrorFor(errors, "password_confirm")}}
                         </label>
                     </div>
 
                     <div class="my-0 py-0 divider"></div>
 
                     <div class="flex justify-end items-center px-4 py-3">
-                        <button class="btn btn-primary">Save</button>
+                        {{if isset(ActionPasswordMessage)}}
+                        <div id="{{RandomId}}"
+                            class="opacity-0 mr-4 text-secondary text-sm transition-opacity duration-500 ease-in-out">
+                            {{ActionPasswordMessage}}
+
+                            <script>
+                                setTimeout(() => document.getElementById('{{RandomId}}').classList.remove('opacity-0'), 10)
+                                window.messageTimeout = setTimeout(() => {
+                                    let el = document.getElementById('{{RandomId}}')
+                                    if (el) {
+                                        el.classList.add('opacity-0')
+                                        setTimeout(() => el.remove(), 600)
+                                    }
+                                }, 2500)
+                            </script>
+                        </div>
+                        {{end}}
+
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

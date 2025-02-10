@@ -41,6 +41,7 @@ func registerHtmxRoutes(app *fiber.App) {
 	hx.Get("/edit-task-modal/:task", handler.RenderEditTaskModalComponent)
 	hx.Get("/delete-task-modal/:task", handler.RenderDeleteTaskModalComponent)
 	hx.Post("/update-profile-information", handler.UpdateProfileInformation)
+	hx.Post("/update-profile-password", handler.UpdateProfilePassword)
 	hx.Get("/delete-account-modal", handler.RenderDeleteAccountModalComponent)
 	hx.Post("/delete-account-modal", handler.DeleteAccount)
 }
