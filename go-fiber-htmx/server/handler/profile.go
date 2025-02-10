@@ -1,6 +1,9 @@
 package handler
 
 import (
+	"math/rand"
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/senither/custodian/database/repository"
 	"github.com/senither/custodian/server/security"
@@ -8,6 +11,19 @@ import (
 	"github.com/senither/custodian/server/utils"
 	"github.com/senither/custodian/server/validator"
 )
+
+func UpdateProfileInformation(c *fiber.Ctx) error {
+	user, err := session.GetAuthenticatedUser(c)
+	if err != nil {
+		return c.SendString("Failed to get the authenticated user")
+	}
+
+	return c.Render("views/profile", fiber.Map{
+		"AuthenticatedUser": user,
+		"ActionMessage":     "Saved",
+		"RandomId":          "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
+	})
+}
 
 func RenderDeleteAccountModalComponent(c *fiber.Ctx) error {
 	return c.Render("views/components/delete-account-modal", fiber.Map{})
