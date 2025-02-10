@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/senither/custodian/database/model"
 	"github.com/senither/custodian/database/repository"
 	"github.com/senither/custodian/server/security"
 	"github.com/senither/custodian/server/session"
@@ -12,11 +13,54 @@ import (
 	"github.com/senither/custodian/server/validator"
 )
 
+type UpdateProfileInformationRequest struct {
+	Name  string `validate:"required,min=3,max=80"`
+	Email string `validate:"required,email"`
+}
+
 func UpdateProfileInformation(c *fiber.Ctx) error {
 	user, err := session.GetAuthenticatedUser(c)
 	if err != nil {
 		return c.SendString("Failed to get the authenticated user")
 	}
+
+	request := UpdateProfileInformationRequest{
+		Name:  c.FormValue("name"),
+		Email: c.FormValue("email"),
+	}
+
+	if err := validator.Parse(c.UserContext(), request); err != nil {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"errors":            err,
+		})
+	}
+
+	emailUser, emailErr := repository.FindUserByEmail(c.UserContext(), request.Email)
+	if emailErr != nil || emailUser.ID != user.ID {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"errors": &fiber.Map{
+				"email": []string{"The email address is already in use"},
+			},
+		})
+	}
+
+	dbErr := repository.UpdateUser(c.UserContext(), *user, model.User{
+		Name:  request.Name,
+		Email: request.Email,
+	})
+
+	if dbErr != nil {
+		return c.Render("views/profile", fiber.Map{
+			"AuthenticatedUser": user,
+			"ActionMessage":     "Failed to save the changes",
+			"RandomId":          "update-profile-" + strconv.FormatInt(rand.Int63(), 10),
+		})
+	}
+
+	user.Name = request.Name
+	user.Email = request.Email
 
 	return c.Render("views/profile", fiber.Map{
 		"AuthenticatedUser": user,

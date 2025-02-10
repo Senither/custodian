@@ -26,16 +26,18 @@
                             <div class="label">
                                 <span class="label-text">Name</span>
                             </div>
-                            <input type="text" placeholder="Your name" class="input-bordered w-full max-w-xs input"
-                                value="{{AuthenticatedUser.Name}}" />
+                            <input type="text" name="name" placeholder="Your name"
+                                class="input-bordered w-full max-w-xs input" value="{{AuthenticatedUser.Name}}" />
+                            {{raw: getInputErrorFor(errors, "name")}}
                         </label>
 
                         <label class="form-control px-4 w-full">
                             <div class="label">
                                 <span class="label-text">Email</span>
                             </div>
-                            <input type="email" placeholder="name@company.com" value="{{AuthenticatedUser.Email}}"
-                                class="input-bordered w-full max-w-xs input" />
+                            <input type="email" name="email" placeholder="name@company.com"
+                                value="{{AuthenticatedUser.Email}}" class="input-bordered w-full max-w-xs input" />
+                            {{raw: getInputErrorFor(errors, "email")}}
                         </label>
                     </div>
 
@@ -113,7 +115,7 @@
                 <p>Permanently delete your account.</p>
             </div>
 
-            <div class="flex flex-1 border-error md:col-span-3 bg-error shadow p-2 border sm:rounded-md">
+            <div class="flex flex-1 md:col-span-3 bg-error shadow p-2 border border-error sm:rounded-md">
                 <div class="bg-base-100 shadow p-4 border border-base-300 rounded-md max-w-none prose">
                     <p>
                         Once your account is deleted, all of its resources and data will be permanently deleted.

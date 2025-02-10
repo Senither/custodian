@@ -71,6 +71,23 @@ func UserExistsByEmail(ctx context.Context, email string) bool {
 	return exists
 }
 
+func UpdateUser(ctx context.Context, user model.User, values model.User) error {
+	if values.Password != "" {
+		hash, err := security.EncryptPassword(values.Password)
+		if err != nil {
+			return err
+		}
+		values.Password = hash
+	}
+
+	result := database.
+		GetConnectionWithContext(ctx).
+		Model(&user).
+		Updates(&values)
+
+	return result.Error
+}
+
 func DeleteUserAndRelatedRecordsById(ctx context.Context, id uint) error {
 	result := database.
 		GetConnectionWithContext(ctx).
