@@ -9,49 +9,53 @@
             </svg>
             <h3 class="font-bold text-lg">Creating new Task</h3>
         </div>
-        <form class="flex flex-col gap-4 px-6">
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text">What is the task?</span>
+        <form hx-post="/hx/create-task-modal" hx-swap="outerHTML" hx-target="#create-task-modal">
+            <div class="flex flex-col gap-4 px-6">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">What is the task?</span>
+                    </div>
+                    <input type="text" name="message" value='{{raw: getOldInputValueFor(old, "message") }}'
+                        placeholder="Eg. Do the thing..." class="input-bordered w-full input" />
+                    {{raw: getInputErrorFor(errors, "message")}}
+                </label>
+                <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Category</span>
+                        </div>
+                        <select name="category_id" class="select-bordered select">
+                            <option disabled selected>Pick one</option>
+                            {{range _, category := categories}}
+                            <option value="{{category.ID}}">{{category.Name}}</option>
+                            {{end}}
+                        </select>
+                        {{raw: getInputErrorFor(errors, "category_id")}}
+                    </label>
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Priority</span>
+                        </div>
+                        <select name="priority_id" class="select-bordered select">
+                            <option disabled selected>Pick one</option>
+                            {{range _, priority := priorities}}
+                            <option value="{{priority.ID}}">{{priority.Name}}</option>
+                            {{end}}
+                        </select>
+                        {{raw: getInputErrorFor(errors, "priority_id")}}
+                    </label>
                 </div>
-                <input type="text" placeholder="Eg. Do the thing..." class="input-bordered w-full input" />
-            </label>
-
-            <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
-                <label class="form-control">
-                    <div class="label">
-                        <span class="label-text">Category</span>
-                    </div>
-                    <select class="select-bordered select">
-                        <option disabled selected>Pick one</option>
-                        {{range _, category := categories}}
-                        <option value="{{category.ID}}">{{category.Name}}</option>
-                        {{end}}
-                    </select>
-                </label>
-
-                <label class="form-control">
-                    <div class="label">
-                        <span class="label-text">Priority</span>
-                    </div>
-                    <select class="select-bordered select">
-                        <option disabled selected>Pick one</option>
-                        {{range _, priority := priorities}}
-                        <option value="{{priority.ID}}">{{priority.Name}}</option>
-                        {{end}}
-                    </select>
-                </label>
+            </div>
+            <div class="modal-backdrop">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
+                    <button class="text-primary-content btn btn-primary">Create Task</button>
+                    <a class="bg-base-200 border border-base-300 btn"
+                        onclick="document.getElementById('create-task-modal').close()">
+                        Close
+                    </a>
+                </div>
             </div>
         </form>
-        <div class="modal-backdrop">
-            <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
-                <button class="text-primary-content btn btn-primary">Create Task</button>
-                <button class="bg-base-200 border border-base-300 btn"
-                    onclick="document.getElementById('create-task-modal').close()">
-                    Close
-                </button>
-            </div>
-        </div>
     </div>
 </dialog>
 

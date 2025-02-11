@@ -36,10 +36,14 @@ func registerViewRoutes(app *fiber.App) {
 func registerHtmxRoutes(app *fiber.App) {
 	hx := app.Group("/hx")
 
+	// Tasks
 	hx.Get("/tasks", handler.RenderTasksComponent)
 	hx.Get("/create-task-modal", handler.RenderCreateTaskModalComponent)
+	hx.Post("/create-task-modal", handler.CreateTask)
 	hx.Get("/edit-task-modal/:task", handler.RenderEditTaskModalComponent)
 	hx.Get("/delete-task-modal/:task", handler.RenderDeleteTaskModalComponent)
+
+	// Profile
 	hx.Post("/update-profile-information", handler.UpdateProfileInformation)
 	hx.Post("/update-profile-password", handler.UpdateProfilePassword)
 	hx.Get("/delete-account-modal", handler.RenderDeleteAccountModalComponent)
