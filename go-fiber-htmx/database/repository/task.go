@@ -22,6 +22,8 @@ func GetTasksForUserWithRelations(ctx context.Context, user *model.User) ([]mode
 	err := database.
 		GetConnectionWithContext(ctx).
 		Where("user_id = ?", user.ID).
+		Order("status ASC").
+		Order("created_at DESC").
 		Preload("Category").
 		Preload("Priority").
 		Find(&tasks).
