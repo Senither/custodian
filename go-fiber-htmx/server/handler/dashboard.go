@@ -127,7 +127,8 @@ func CreateTask(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.SendStatus(fiber.StatusCreated)
+	// Refresh the tasks component to show the new task
+	return c.SendString("<script>window.htmx.trigger('#tasks', 'refresh')</script>")
 }
 
 func RenderEditTaskModalComponent(c *fiber.Ctx) error {
