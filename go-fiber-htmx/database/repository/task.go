@@ -31,3 +31,25 @@ func GetTasksForUserWithRelations(ctx context.Context, user *model.User) ([]mode
 
 	return tasks, err
 }
+
+func FindTaskForUser(ctx context.Context, user model.User, id uint) (*model.Task, error) {
+	var task model.Task
+
+	err := database.
+		GetConnectionWithContext(ctx).
+		Where("user_id = ?", user.ID).
+		Where("id = ?", id).
+		First(&task).
+		Error
+
+	return &task, err
+}
+
+func UpdateTask(ctx context.Context, task model.Task, values interface{}) error {
+	result := database.
+		GetConnectionWithContext(ctx).
+		Model(&task).
+		Updates(&values)
+
+	return result.Error
+}

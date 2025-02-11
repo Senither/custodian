@@ -12,8 +12,14 @@
     {{range _, task := tasks}}
     <div class="bg-primary/5 shadow px-4 py-3 border border-primary/10 rounded-md">
         <div class="flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <input type="checkbox" class="checkbox checkbox-lg checked:checkbox-primary" />
+            <label class="flex items-center gap-4">
+                {{if task.Status}}
+                <input type="checkbox" name="status" class="checkbox checkbox-lg checked:checkbox-primary"
+                    hx-post="/hx/toggle-task-status/{{task.ID}}" hx-trigger="change" checked />
+                {{else}}
+                <input type="checkbox" name="status" class="checkbox checkbox-lg"
+                    hx-post="/hx/toggle-task-status/{{task.ID}}" hx-trigger="change" />
+                {{end}}
 
                 <div>
                     <h4 class="font-semibold text-lg">{{task.Message}}</h4>
@@ -27,7 +33,7 @@
                         </span>
                     </div>
                 </div>
-            </div>
+            </label>
 
             <div class="flex gap-2">
                 <button hx-get="/hx/delete-task-modal/{{task.ID}}" hx-target="#modal" hx-swap="innerHTML"
