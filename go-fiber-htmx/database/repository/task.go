@@ -15,3 +15,17 @@ func CreateTaskForUser(ctx context.Context, user *model.User, task model.Task) e
 		Create(&task).
 		Error
 }
+
+func GetTasksForUserWithRelations(ctx context.Context, user *model.User) ([]model.Task, error) {
+	var tasks []model.Task
+
+	err := database.
+		GetConnectionWithContext(ctx).
+		Where("user_id = ?", user.ID).
+		Preload("Category").
+		Preload("Priority").
+		Find(&tasks).
+		Error
+
+	return tasks, err
+}

@@ -15,8 +15,18 @@ func RenderTasksComponent(c *fiber.Ctx) error {
 		return c.SendString("Failed to load user from session")
 	}
 
+	tasks, dbErr := repository.GetTasksForUserWithRelations(c.UserContext(), user)
+	if dbErr != nil {
+		return c.Render("views/components/tasks", fiber.Map{
+			"user":     user,
+			"tasks":    tasks,
+			"hasError": true,
+		})
+	}
+
 	return c.Render("views/components/tasks", fiber.Map{
-		"user": user,
+		"user":  user,
+		"tasks": tasks,
 	})
 }
 
