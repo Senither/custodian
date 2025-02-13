@@ -17,7 +17,7 @@ func RenderTasksComponent(c *fiber.Ctx) error {
 		return c.SendString("Failed to load user from session")
 	}
 
-	return renderTasksComponent(c, user)
+	return renderTaskComponentWithData(c, user)
 }
 
 func ToggleTaskStatus(c *fiber.Ctx) error {
@@ -29,7 +29,7 @@ func ToggleTaskStatus(c *fiber.Ctx) error {
 	taskId := utils.ParseToUint(c.Params("task"))
 	task, dbErr := repository.FindTaskForUser(c.UserContext(), *user, taskId)
 	if dbErr != nil {
-		return renderTasksComponent(c, user)
+		return renderTaskComponentWithData(c, user)
 	}
 
 	updateErr := repository.UpdateTask(c.UserContext(), *task, map[string]interface{}{
@@ -39,10 +39,10 @@ func ToggleTaskStatus(c *fiber.Ctx) error {
 		slog.Error("Failed to update task status", "error", updateErr, "task", task)
 	}
 
-	return renderTasksComponent(c, user)
+	return renderTaskComponentWithData(c, user)
 }
 
-func renderTasksComponent(c *fiber.Ctx, user *model.User) error {
+func renderTaskComponentWithData(c *fiber.Ctx, user *model.User) error {
 	tasks, dbErr := repository.GetTasksForUserWithRelations(c.UserContext(), user)
 	if dbErr != nil {
 		return c.Render("views/components/tasks", fiber.Map{
