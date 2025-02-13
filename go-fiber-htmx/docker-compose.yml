@@ -1,0 +1,10 @@
+services:
+  fiber:
+    image: senither/custodian-go-fiber-htmx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - 'APP_ADDR=0.0.0.0:8000'
+    ports:
+      - 8000:8000

@@ -1,0 +1,11 @@
+/node_modules
+/build
+/tmp
+.env
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.sqlite
+*.db
