@@ -44,6 +44,7 @@ func registerHtmxRoutes(app *fiber.App) {
 	hx.Get("/edit-task-modal/:task", handler.RenderEditTaskModalComponent)
 	hx.Post("/edit-task-modal/:task", handler.UpdateTask)
 	hx.Get("/delete-task-modal/:task", handler.RenderDeleteTaskModalComponent)
+	hx.Post("/delete-task-modal/:task", handler.DeleteTask)
 
 	// Profile
 	hx.Post("/update-profile-information", handler.UpdateProfileInformation)

@@ -265,7 +265,36 @@ func UpdateTask(c *fiber.Ctx) error {
 }
 
 func RenderDeleteTaskModalComponent(c *fiber.Ctx) error {
+	user, err := session.GetAuthenticatedUser(c)
+	if err != nil {
+		return c.SendString("Failed to load user from session")
+	}
+
+	task, dbErr := repository.FindTaskForUser(c.UserContext(), *user, utils.ParseToUint(c.Params("task")))
+	if dbErr != nil {
+		return c.SendString("Failed to load task")
+	}
+
 	return c.Render("views/components/delete-task-modal", fiber.Map{
-		"task": c.Params("task"),
+		"task": task,
 	})
+}
+
+func DeleteTask(c *fiber.Ctx) error {
+	user, err := session.GetAuthenticatedUser(c)
+	if err != nil {
+		return c.SendString("Failed to load user from session")
+	}
+
+	task, dbErr := repository.FindTaskForUser(c.UserContext(), *user, utils.ParseToUint(c.Params("task")))
+	if dbErr != nil {
+		return c.SendString("Failed to load task")
+	}
+
+	deleteErr := repository.DeleteTask(c.UserContext(), *task)
+	if deleteErr != nil {
+		return c.SendString("Failed to delete task")
+	}
+
+	return c.SendString("<script>window.htmx.trigger('#tasks', 'refresh')</script>")
 }

@@ -1,4 +1,4 @@
-<dialog id="delete-task-modal" class="backdrop-blur-sm backdrop-grayscale modal">
+<dialog id="delete-task-modal" class="backdrop-blur-sm backdrop-grayscale modal" open>
     <div class="p-0 modal-box">
         <div class="flex items-center gap-4 p-6">
             <svg class="w-8 h-8 text-warning" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
@@ -11,17 +11,20 @@
         </div>
         <div class="px-6 prose">
             <p>
-                You're about the delete the "{{task}}" task, this is a permanent action and cannot be reversed.
+                You're about the delete the "{{task.Message}}" task, this is a permanent action and cannot be reversed.
             </p>
             <p>Are you sure you want to continue?</p>
         </div>
         <div class="modal-backdrop">
             <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
-                <button class="btn btn-warning">Delete Task</button>
-                <button class="bg-base-200 border border-base-300 btn"
+                <button hx-post="/hx/delete-task-modal/{{task.ID}}" hx-swap="outerHTML" hx-target="#delete-task-modal"
+                    class="btn btn-warning">
+                    Delete Task
+                </button>
+                <a class="bg-base-200 border border-base-300 btn"
                     onclick="document.getElementById('delete-task-modal').close()">
                     Close
-                </button>
+                </a>
             </div>
         </div>
     </div>

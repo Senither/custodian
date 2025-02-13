@@ -53,3 +53,10 @@ func UpdateTask(ctx context.Context, task model.Task, values interface{}) error 
 
 	return result.Error
 }
+
+func DeleteTask(ctx context.Context, task model.Task) error {
+	return database.
+		GetConnectionWithContext(ctx).
+		Delete(&task).
+		Error
+}
