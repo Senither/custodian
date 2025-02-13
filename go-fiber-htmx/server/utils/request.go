@@ -35,3 +35,7 @@ func ConvertToFiberMap(data interface{}) *fiber.Map {
 
 	return &result
 }
+
+func SendHtmxRefreshScript(c *fiber.Ctx, target string) error {
+	return c.SendString(fmt.Sprintf("<script>window.htmx.trigger('%s', 'refresh')</script>", target))
+}
