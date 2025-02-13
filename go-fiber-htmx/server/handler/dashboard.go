@@ -58,7 +58,30 @@ func ToggleTaskStatus(c *fiber.Ctx) error {
 }
 
 func renderTaskComponentWithData(c *fiber.Ctx, user *model.User) error {
-	tasks, dbErr := repository.GetTasksForUserWithRelations(c.UserContext(), user)
+	var search = make(map[string]interface{})
+
+	if len(c.Query("q")) > 0 {
+		search["message LIKE ?"] = "%" + c.Query("q") + "%"
+	}
+
+	if len(c.Query("category")) > 0 {
+		search["category_id = ?"] = utils.ParseToUint(c.Query("category"))
+	}
+
+	if len(c.Query("priority")) > 0 {
+		search["priority_id = ?"] = utils.ParseToUint(c.Query("priority"))
+	}
+
+	if len(c.Query("status")) > 0 {
+		switch c.Query("status") {
+		case "finished":
+			search["status = ?"] = 1
+		case "pending":
+			search["status = ?"] = 0
+		}
+	}
+
+	tasks, dbErr := repository.GetTasksWithSearchForUserWithRelations(c.UserContext(), user, search)
 	if dbErr != nil {
 		return c.Render("views/components/tasks", fiber.Map{
 			"user":     user,
@@ -68,8 +91,9 @@ func renderTaskComponentWithData(c *fiber.Ctx, user *model.User) error {
 	}
 
 	return c.Render("views/components/tasks", fiber.Map{
-		"user":  user,
-		"tasks": tasks,
+		"user":      user,
+		"tasks":     tasks,
+		"hasSearch": len(search) > 0,
 	})
 }
 

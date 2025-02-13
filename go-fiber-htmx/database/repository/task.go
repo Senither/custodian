@@ -16,12 +16,18 @@ func CreateTaskForUser(ctx context.Context, user *model.User, task model.Task) e
 		Error
 }
 
-func GetTasksForUserWithRelations(ctx context.Context, user *model.User) ([]model.Task, error) {
+func GetTasksWithSearchForUserWithRelations(ctx context.Context, user *model.User, where map[string]interface{}) ([]model.Task, error) {
 	var tasks []model.Task
 
-	err := database.
+	query := database.
 		GetConnectionWithContext(ctx).
-		Where("user_id = ?", user.ID).
+		Where("user_id = ?", user.ID)
+
+	for key, value := range where {
+		query = query.Where(key, value)
+	}
+
+	err := query.
 		Order("status ASC").
 		Order("created_at DESC").
 		Preload("Category").
