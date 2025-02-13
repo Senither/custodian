@@ -7,14 +7,14 @@
             </path>
         </svg>
     </div>
-    <form tabindex="0" class="z-[1] bg-base-100 shadow p-2 rounded-box dropdown-content menu">
-        <!-- Filter Dropdown : Start -->
+    <form id="filters-form" hx-get="/hx/tasks" hx-target="#tasks" hx-trigger="input delay:250ms" tabindex="0"
+        class="z-[1] bg-base-100 shadow p-2 rounded-box dropdown-content menu">
         <div class="flex flex-col gap-4 px-3 py-2 min-w-52">
             <label class="form-control w-full max-w-xs">
                 <div class="label">
                     <span class="label-text">Search for task</span>
                 </div>
-                <input type="text" placeholder="Eg. My shopping list..."
+                <input type="text" name="q" placeholder="Eg. My shopping list..."
                     class="input-bordered w-full max-w-xs input input-sm" />
             </label>
 
@@ -26,13 +26,13 @@
                 <div class="flex justify-start gap-3">
                     <div class="form-control">
                         <label class="flex justify-start gap-3 cursor-pointer label">
-                            <input type="radio" name="status-radio" class="checked:radio-primary radio" />
+                            <input type="radio" name="status" value="finished" class="checked:radio-primary radio" />
                             <span class="label-text">Finished</span>
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="flex justify-start gap-3 cursor-pointer label">
-                            <input type="radio" name="status-radio" class="checked:radio-secondary radio" />
+                            <input type="radio" name="status" value="pending" class="checked:radio-secondary radio" />
                             <span class="label-text">Pending</span>
                         </label>
                     </div>
@@ -43,12 +43,11 @@
                 <div class="label">
                     <span class="label-text">Filter by category</span>
                 </div>
-                <select class="select-bordered select-sm select">
+                <select name="category" class="select-bordered select-sm select">
                     <option disabled selected>Pick one</option>
-                    <option>House Stuff</option>
-                    <option>Work</option>
-                    <option>Learning</option>
-                    <option>Meeting</option>
+                    {{range _, category := categories}}
+                    <option value="{{category.ID}}">{{category.Name}}</option>
+                    {{end}}
                 </select>
             </label>
 
@@ -56,17 +55,34 @@
                 <div class="label">
                     <span class="label-text">Filter by priority</span>
                 </div>
-                <select class="select-bordered select-sm select">
+                <select name="priority" class="select-bordered select-sm select">
                     <option disabled selected>Pick one</option>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                    <option>Highest</option>
+                    {{range _, priority := priorities}}
+                    <option value="{{priority.ID}}">{{priority.Name}}</option>
+                    {{end}}
                 </select>
             </label>
 
-            <button class="mt-4 btn btn-secondary">Reset filters</button>
+            <a class="mt-4 btn btn-secondary" onclick="resetFiltersForm()">
+                Reset filters
+            </a>
         </div>
-        <!-- Filter Dropdown : End -->
     </form>
 </div>
+
+<script>
+    document.getElementById('filters-form')
+        .querySelectorAll('input, select')
+        .forEach(el => {
+            el.addEventListener('input', () => {
+                clearTimeout(el.dataset.timer)
+
+                el.dataset.timer = setTimeout(() => htmx.trigger(el.form, 'input'), 250)
+            })
+        })
+
+    function resetFiltersForm() {
+        document.getElementById('filters-form').reset()
+        htmx.trigger(document.getElementById('filters-form'), 'input')
+    }
+</script>

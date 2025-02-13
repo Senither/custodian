@@ -20,6 +20,21 @@ func RenderTasksComponent(c *fiber.Ctx) error {
 	return renderTaskComponentWithData(c, user)
 }
 
+func RenderFiltersComponent(c *fiber.Ctx) error {
+	user, err := session.GetAuthenticatedUser(c)
+	if err != nil {
+		return c.SendString("Failed to load user from session")
+	}
+
+	categories, _ := repository.GetCategoriesForUser(c.UserContext(), user)
+	priorities, _ := repository.GetPrioritiesForUser(c.UserContext(), user)
+
+	return c.Render("views/components/filters", fiber.Map{
+		"categories": categories,
+		"priorities": priorities,
+	})
+}
+
 func ToggleTaskStatus(c *fiber.Ctx) error {
 	user, err := session.GetAuthenticatedUser(c)
 	if err != nil {

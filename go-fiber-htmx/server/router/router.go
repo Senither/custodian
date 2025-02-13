@@ -38,6 +38,7 @@ func registerHtmxRoutes(app *fiber.App) {
 
 	// Tasks
 	hx.Get("/tasks", handler.RenderTasksComponent)
+	hx.Get("/filters", handler.RenderFiltersComponent)
 	hx.Post("/toggle-task-status/:task", handler.ToggleTaskStatus)
 	hx.Get("/create-task-modal", handler.RenderCreateTaskModalComponent)
 	hx.Post("/create-task-modal", handler.CreateTask)

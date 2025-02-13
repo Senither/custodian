@@ -3,7 +3,7 @@
         Add Task
     </button>
 
-    {{include "partials/filter-tasks"}}
+    <div id="filters" hx-trigger="load" hx-get="/hx/filters"></div>
 </div>
 
 <div id="tasks" hx-trigger="load, refresh" hx-get="/hx/tasks"></div>
