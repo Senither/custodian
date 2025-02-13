@@ -1,4 +1,4 @@
-<dialog id="edit-task-modal" class="backdrop-blur-sm backdrop-grayscale modal">
+<dialog id="edit-task-modal" class="backdrop-blur-sm backdrop-grayscale modal" open>
     <div class="p-0 modal-box">
         <div class="flex items-center gap-4 p-6">
             <svg class="w-8 h-8 text-primary" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor"
@@ -7,53 +7,59 @@
                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10">
                 </path>
             </svg>
-            <h3 class="font-bold text-lg">Editing Task {{task}}</h3>
+            <h3 class="font-bold text-lg">Editing Task</h3>
         </div>
-        <div class="flex flex-col gap-4 px-6">
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text">What is the task?</span>
+        <form hx-post="/hx/edit-task-modal/{{task.ID}}" hx-swap="outerHTML" hx-target="#edit-task-modal">
+            <div class="flex flex-col gap-4 px-6">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">What is the task?</span>
+                    </div>
+                    <input type="text" name="message" placeholder="Eg. Do the thing..."
+                        class="input-bordered w-full input" value="{{task.Message}}" />
+                    {{raw: getInputErrorFor(errors, "message")}}
+                </label>
+                <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Category</span>
+                        </div>
+                        <select name="category_id" class="select-bordered select">
+                            <option disabled>Pick one</option>
+                            {{range _, category := categories}}
+                            <option value="{{category.ID}}" {{category.ID==task.CategoryId ? "selected" : "" }}>
+                                {{category.Name}}
+                            </option>
+                            {{end}}
+                        </select>
+                        {{raw: getInputErrorFor(errors, "category_id")}}
+                    </label>
+                    <label class="form-control">
+                        <div class="label">
+                            <span class="label-text">Priority</span>
+                        </div>
+                        <select name="priority_id" class="select-bordered select">
+                            <option disabled>Pick one</option>
+                            {{range _, priority := priorities}}
+                            <option value="{{priority.ID}}" {{priority.ID==task.PriorityId ? "selected" : "" }}>
+                                {{priority.Name}}
+                            </option>
+                            {{end}}
+                        </select>
+                        {{raw: getInputErrorFor(errors, "priority_id")}}
+                    </label>
                 </div>
-                <input type="text" placeholder="Eg. Do the thing..." class="input-bordered w-full input" />
-            </label>
-
-            <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
-                <label class="form-control">
-                    <div class="label">
-                        <span class="label-text">Category</span>
-                    </div>
-                    <select class="select-bordered select">
-                        <option disabled selected>Pick one</option>
-                        <option>House Stuff</option>
-                        <option>Work</option>
-                        <option>Learning</option>
-                        <option>Meeting</option>
-                    </select>
-                </label>
-
-                <label class="form-control">
-                    <div class="label">
-                        <span class="label-text">Priority</span>
-                    </div>
-                    <select class="select-bordered select">
-                        <option disabled selected>Pick one</option>
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
-                        <option>Highest</option>
-                    </select>
-                </label>
             </div>
-        </div>
-        <div class="modal-backdrop">
-            <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
-                <button class="text-primary-content btn btn-primary">Save Task</button>
-                <button class="bg-base-200 border border-base-300 btn"
-                    onclick="document.getElementById('edit-task-modal').close()">
-                    Close
-                </button>
+            <div class="modal-backdrop">
+                <div class="gap-4 grid grid-cols-2 mt-4 px-6 py-4 border-t border-base-300">
+                    <button type="submit" class="text-primary-content btn btn-primary">Save Task</button>
+                    <a class="bg-base-200 border border-base-300 btn"
+                        onclick="document.getElementById('edit-task-modal').close()">
+                        Close
+                    </a>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </dialog>
 
