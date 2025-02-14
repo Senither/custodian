@@ -25,7 +25,7 @@ func main() {
 		slog.Info("Starting application with debug mode enabled")
 	}
 
-	dbErr := database.InitiateDatabaseConnection()
+	dbErr := database.InitiateDatabaseConnection(config.Get().Database.Url)
 	if dbErr != nil {
 		panic(dbErr)
 	}

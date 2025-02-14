@@ -11,8 +11,12 @@ import (
 
 var connection *gorm.DB
 
-func InitiateDatabaseConnection() error {
-	con, err := gorm.Open(sqlite.Open(config.Get().Database.Url), &gorm.Config{})
+// A DSN string for an in-memory SQLite database, this is used
+// during testing to create a new database for each test.
+const MemorySQLiteDSN = "file::memory:?cache=shared"
+
+func InitiateDatabaseConnection(dsn string) error {
+	con, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err
 	}
@@ -38,4 +42,13 @@ func GetConnectionWithContext(ctx context.Context) *gorm.DB {
 	}
 
 	return db
+}
+
+func Disconnect() error {
+	sqlDB, err := connection.DB()
+	if err != nil {
+		return err
+	}
+
+	return sqlDB.Close()
 }
