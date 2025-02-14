@@ -63,7 +63,7 @@ func Logout(c *fiber.Ctx) error {
 type RegisterRequest struct {
 	Name            string `validate:"required,min=3,max=80"`
 	Email           string `validate:"required,email"`
-	Password        string `validate:"required,min=8"`
+	Password        string `validate:"required,min=8,max=72"`
 	PasswordConfirm string `validate:"required"`
 }
 

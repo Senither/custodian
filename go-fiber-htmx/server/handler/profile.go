@@ -71,7 +71,7 @@ func UpdateProfileInformation(c *fiber.Ctx) error {
 
 type UpdateProfilePasswordRequest struct {
 	CurrentPassword string `validate:"required,min=1"`
-	Password        string `validate:"required,min=8"`
+	Password        string `validate:"required,min=8,max=72"`
 	PasswordConfirm string `validate:"required"`
 }
 
