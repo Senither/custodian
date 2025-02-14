@@ -24,9 +24,8 @@ type DatabaseConfig struct {
 
 var config EnvironmentConfig
 
-func LoadConfig() error {
-	err := godotenv.Load(".env")
-
+func LoadConfig(file string) error {
+	err := godotenv.Load(file)
 	if err != nil {
 		return err
 	}

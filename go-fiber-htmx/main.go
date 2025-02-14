@@ -16,7 +16,7 @@ var views embed.FS
 var public embed.FS
 
 func main() {
-	cfgErr := config.LoadConfig()
+	cfgErr := config.LoadConfig(".env")
 	if cfgErr != nil {
 		panic(cfgErr)
 	}
