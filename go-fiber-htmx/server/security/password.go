@@ -2,8 +2,8 @@ package security
 
 import "golang.org/x/crypto/bcrypt"
 
-func VerifyPassword(password string, value string) bool {
-	return bcrypt.CompareHashAndPassword([]byte(password), []byte(value)) == nil
+func VerifyPassword(hash string, password string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
 }
 
 func EncryptPassword(password string) (string, error) {

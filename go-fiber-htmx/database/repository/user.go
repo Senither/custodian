@@ -77,6 +77,7 @@ func UpdateUser(ctx context.Context, user model.User, values model.User) error {
 		if err != nil {
 			return err
 		}
+
 		values.Password = hash
 	}
 
