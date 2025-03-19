@@ -21,7 +21,10 @@
     </div>
     {{else}}
     {{range _, task := tasks}}
-    <div class="bg-primary/5 shadow px-4 py-3 border border-primary/10 rounded-md">
+    <div class="
+        bg-primary/5 shadow px-4 py-3 border border-primary/10 rounded-md
+        {{if task.Status}} opacity-45 hover:opacity-80 transition-opacity {{end}}
+    ">
         <div class="flex justify-between items-center">
             <label class="flex items-center gap-4">
                 {{if task.Status}}
