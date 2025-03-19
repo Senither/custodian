@@ -1,0 +1,58 @@
+<div id="login-form" class="flex bg-base-100 shadow-2xl w-96 card">
+    <div class="card-body">
+        <form hx-post="/login" hx-swap="outerHTML" hx-target="#login-form">
+            <h3 class="font-semibold text-lg">Sign in to Custodian</h3>
+
+            {{if isset(actionMessage)}}
+            <div class="text-info">
+                {{actionMessage}}
+            </div>
+            {{end}}
+
+            {{if isset(errorMessage)}}
+            <div class="text-error">
+                {{errorMessage}}
+            </div>
+            {{end}}
+
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Email</span>
+                </label>
+                <input type="email" name="email" placeholder="email@company.com" class="input-bordered input" autofocus
+                    required />
+                {{raw: getInputErrorFor(errors, "email")}}
+            </div>
+
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Password</span>
+                </label>
+                <input type="password" name="password" placeholder="********" class="input-bordered input" required />
+                {{raw: getInputErrorFor(errors, "password")}}
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <label class="flex gap-2 cursor-pointer label">
+                    <input type="checkbox" name="remember" class="checkbox checkbox-primary" />
+                    <span class="label-text">Remember me</span>
+                </label>
+
+                <label class="label">
+                    <a hx-target="body" hx-swap="outerHTML" href="/forgot-password"
+                        class="label-text link link-hover link-primary">
+                        Forgot password?
+                    </a>
+                </label>
+            </div>
+
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+
+        <p class="text-base-content text-sm">
+            Not registered? <a href="/register" class="link link-hover link-primary">Create account</a>
+        </p>
+    </div>
+</div>

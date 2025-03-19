@@ -30,6 +30,12 @@ When possible the app should also be built using the [template files](template) 
 
 Each version of Custodian can be found in its respective directory. The following is a list of the different versions of Custodian that have been built:
 
+- [Fiber + HTMX](go-fiber-htmx/)
+    - **Language**: Go v1.22
+    - **Backend**: Fiber v2, Gorm, SQLite, Jet, Go Playground Validator
+    - **Frontend**: TailwindCSS, DaisyUI, HTMX, Vanilla JS
+    - **Docker Image Size**: ~23 MB
+
 - [Nuxt + Vue](node-nuxt-vue/)
     - **Language**: Node v22 (Can work with v18+)
     - **Backend**: Nuxt, Nuxt Auth Utils, Zod, Prisma, ESLint
