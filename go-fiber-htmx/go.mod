@@ -1,7 +1,6 @@
 module github.com/senither/custodian
 
-go 1.22.6
-toolchain go1.24.1
+go 1.24.0
 
 require (
 	github.com/glebarez/sqlite v1.11.0

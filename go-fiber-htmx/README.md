@@ -1,6 +1,6 @@
 # Go + Fiber + HTMX
 
-This is a Fiber v2 and HTMX v2 version of Custodian running on Go 1.22.
+This is a Fiber v2 and HTMX v2 version of Custodian running on Go 1.24.
 
 ## Table of Contents
 

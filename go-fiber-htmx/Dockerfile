@@ -9,7 +9,7 @@ RUN npm install
 RUN npm run build:prod
 
 # Setup the Go build stage
-FROM golang:1.22 AS go-build
+FROM golang:1.24 AS go-build
 
 WORKDIR /app
 
