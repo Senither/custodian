@@ -27,13 +27,9 @@
     ">
         <div class="flex justify-between items-center">
             <label class="flex items-center gap-4">
-                {{if task.Status}}
                 <input type="checkbox" name="status" class="checkbox checkbox-lg checked:checkbox-primary"
-                    hx-post="/hx/toggle-task-status/{{task.ID}}" hx-trigger="change" checked />
-                {{else}}
-                <input type="checkbox" name="status" class="checkbox checkbox-lg"
-                    hx-post="/hx/toggle-task-status/{{task.ID}}" hx-trigger="change" />
-                {{end}}
+                    hx-post="/hx/toggle-task-status/{{task.ID}}" hx-trigger="change" hx-target="#task-list"
+                    hx-swap="outerHTML" {{if task.Status}} checked {{end}} />
 
                 <div>
                     <h4 class="font-semibold text-lg">{{task.Message}}</h4>
