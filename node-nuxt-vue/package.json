@@ -21,7 +21,7 @@
     "dependencies": {
         "@antfu/eslint-config": "^4.1.0",
         "@headlessui/vue": "^1.7.23",
-        "@nuxt/eslint": "^0.7.5",
+        "@nuxt/eslint": "^0.7.6",
         "@nuxtjs/tailwindcss": "^6.13.1",
         "@prisma/client": "^6.2.1",
         "@prisma/nuxt": "^0.2.0",
