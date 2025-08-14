@@ -13,7 +13,7 @@ This is a Laravel and Livewire version of Custodian running on PHP 8.2+
 
 ## The Stack
 
-The backend is built with [Laravel 11](https://laravel.com/) and [Livewire 3](https://livewire.laravel.com/), with test coverage using [Pest 3](https://pestphp.com/), and [Pint](https://laravel.com/docs/11.x/pint#main-content) to ensure formatting consistency.
+The backend is built with [Laravel 12](https://laravel.com/) and [Livewire 3](https://livewire.laravel.com/), with test coverage using [Pest 3](https://pestphp.com/), and [Pint](https://laravel.com/docs/12.x/pint#main-content) to ensure formatting consistency.
 
 For the frontend we're using [TailwindCSS 3](https://tailwindcss.com/) along with [DaisyUI](https://daisyui.com/) from the [template files](/template/), as well as [AlpineJS 3](https://alpinejs.dev/) that comes with Livewire to make modals and other in-browser features feel more snappy, all of this is built using [Vite 6](https://vite.dev/) and [NodeJS 18+](https://nodejs.org/).
 
